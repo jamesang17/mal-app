@@ -14,7 +14,7 @@ export default class Login extends React.Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.handeLogin= this.handleLogin.bind(this);
+    this.handleLogin= this.handleLogin.bind(this);
     this.handleRegistration= this.handleRegistration.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
     this.handleSignUp = this.handleSignUp.bind(this);
@@ -59,6 +59,7 @@ export default class Login extends React.Component {
   async handleLogin(event) {
     console.log("Login form submitted")
     const { email, password } = this.state;
+    this.props.handleSuccessfulAuth("SUCCESS");   
     event.preventDefault();
   }
 
