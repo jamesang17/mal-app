@@ -45,7 +45,7 @@ export default class Appbar extends React.Component {
 
   handleLogin(obj) {
     console.log("Trying to login");
-    this.props.handleRegistration("LOGIN");
+    this.props.handleLogin("LOGIN");
   }
 
   render() {

@@ -1,38 +1,38 @@
 import React from 'react';
 
 import Appbar from './Appbar';
-import Registration from './auth/Registration';
+import Login from './auth/Login';
 
 export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      openRegistration: false,
+      displayLogin: false,
     }
     this.handleSuccessfulAuth = this.handleSuccessfulAuth.bind(this);
-    this.handleRegistration = this.handleRegistration.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
   }
 
-  handleRegistration(data) {
+  handleLogin(data) {
     if (data === "LOGIN") {
-      this.setState({ openRegistration: true });
+      this.setState({ displayLogin : true });
     } else if (data === "CANCEL") {
-      this.setState({ openRegistration: false });
+      this.setState({ displayLogin : false });
     }
   }
 
   handleSuccessfulAuth(data) {
     console.log(data);
-    this.setState({ openRegistration: false });
+    this.setState({ displayLogin : false });
     this.props.handleSuccessfulAuth(data);
   }
 
-  displayRegistration() {
-    if (this.state.openRegistration) {
+  displayLogin() {
+    if (this.state.displayLogin) {
       return (
-        <Registration
+        <Login
         handleSuccessfulAuth={this.handleSuccessfulAuth}
-        handleRegistration={this.handleRegistration} />
+        handleLogin={this.handleLogin} />
       )
     }
   }
@@ -40,9 +40,9 @@ export default class Home extends React.Component {
   render() {
     return (
       <div>
-        <Appbar isLoggedIn={this.props.isLoggedIn} handleRegistration={this.handleRegistration}/>
+        <Appbar isLoggedIn={this.props.isLoggedIn} handleLogin={this.handleLogin}/>
         <h1>Status: {this.props.isLoggedIn}</h1>
-        {this.displayRegistration()}
+        {this.displayLogin()}
       </div>
     )
   }
