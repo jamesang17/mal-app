@@ -1,29 +1,17 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import { Home }  from './components/Components';
+import { AuthProvider } from './components/auth/Auth';
+import Home from './components/Home';
 
-export default class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLoggedIn: "FALSE",
-      user: {}
-    }
-    this.handleSuccessfulAuth = this.handleSuccessfulAuth.bind(this);
-  }
+const App = () => {
+  
+  return (
+    <div>
+      <AuthProvider>
+        <Home />
+      </AuthProvider>
+    </div>
+  );
+};
 
-  handleSuccessfulAuth(data) {
-    this.setState({ isLoggedIn: "TRUE" });
-  }
-
-  render() {
-    return (
-      <div>
-        <div>
-          <Home isLoggedIn={this.state.isLoggedIn} handleSuccessfulAuth={this.handleSuccessfulAuth}/>
-        </div>
-      </div>
-    );
-  }
-}
+export default App;
