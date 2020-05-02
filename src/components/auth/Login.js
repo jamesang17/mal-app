@@ -29,6 +29,7 @@ export default class Login extends React.Component {
 
   handleClose(event) {
     this.setState({ open: false });
+    this.setState({ errors: "" });
   }
 
   handleChange(event) {
@@ -37,18 +38,23 @@ export default class Login extends React.Component {
 
   async handleLogin(event) {
     const { email, password } = this.state;
-    try {
-      await firebase.auth().signInWithEmailAndPassword(email, password);
-    } catch (error) {
-      alert(error);
-    }
-    this.setState({ open: false });
+    await firebase.auth().signInWithEmailAndPassword(email, password)
+      .then((cred) => {
+        this.setState({ open: false });
+      })
+      .catch((error) => {
+        if (error.code === "auth/user-not-found") {
+          this.setState({ errors: "Sorry! We didn't find an account with that email." });  
+        } else {
+          this.setState({ errors: error.message });
+        }
+      });
   }
 
   render() {
     return (
-      <Dialog open={this.state.open} onClose={this.handleClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Login</DialogTitle>
+      <Dialog open={this.state.open} onClose={this.handleClose} aria-labelledby="form-dialog-title" fullWidth={true}>
+        <DialogTitle id="form-dialog-title" style={{ textAlign: "center" }}>Login</DialogTitle>
         <DialogContent>
         <TextField
           autoFocus
@@ -67,12 +73,19 @@ export default class Login extends React.Component {
           fullWidth
           onChange={this.handleChange}
         />
+        <div style={{ textAlign: "center" }}>
+            <p style={{ color: "#747474" }}>
+            Don't have an account?
+            <Button onClick={event => this.props.switchForm(event, "signup")} style={{ padding: 0 }} color="primary" >Sign Up</Button> now!
+          </p>
+        </div>
+        <p style={{ color: "#E97979" }}>{this.state.errors}</p>
         </DialogContent>
         <DialogActions>
         <Button onClick={this.handleClose} color="primary">
           Cancel
         </Button>
-        <Button onClick={this.handleLogin} color="primary">
+        <Button onClick={this.handleLogin} color="primary" variant="contained">
           Login
         </Button>
         </DialogActions>

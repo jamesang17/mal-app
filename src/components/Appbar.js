@@ -1,5 +1,5 @@
 import React from 'react';
-import theme from '../themes/Theme';
+
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -9,7 +9,6 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import { ThemeProvider } from '@material-ui/core/styles';
 import firebase from '../firebase';
 import Login from './auth/Login';
 import SignUp from './auth/SignUp';
@@ -27,6 +26,7 @@ class Appbar extends React.Component {
     this.handleMenuItem = this.handleMenuItem.bind(this);
     this.openDialog = this.openDialog.bind(this);
     this.closeMenu = this.closeMenu.bind(this);
+    this.switchForm = this.switchForm.bind(this);
   }
 
   openDialog(event, value) {
@@ -50,6 +50,16 @@ class Appbar extends React.Component {
       firebase.auth().signOut();
     }
     this.setState({ anchorEl: null });
+  }
+
+  switchForm(event, value) {
+    if (value === "login") {
+      this.signUpRef.current.handleClose();
+      this.loginRef.current.handleOpen();
+    } else {
+      this.loginRef.current.handleClose();
+      this.signUpRef.current.handleOpen();
+    }
   }
 
   displayMenuButtons() {
@@ -83,7 +93,7 @@ class Appbar extends React.Component {
         <div>
           <Button color="inherit" onClick={e => this.openDialog(e, "login")}>
             Login
-              </Button>
+          </Button>
           <Button color="inherit" onClick={e => this.openDialog(e, "signup")}>
             Sign Up
         </Button>
@@ -94,23 +104,23 @@ class Appbar extends React.Component {
   
   render() {
     return (
-      <ThemeProvider theme={theme} >
-        <div className={theme.root}>
+      <div>
+        <div className={this.props.theme.root}>
           <AppBar position="static">
             <Toolbar>
               <IconButton edge="start" color="inherit" aria-label="menu" >
                 <MenuIcon />
               </IconButton>
-              <Typography variant="h6" style={{ flexGrow: 1}}>
+              <Typography variant="h6" style={{ flexGrow: 1 }}>
                 Anime Guide
               </Typography>
               {this.displayMenuButtons()}
             </Toolbar>
           </AppBar>
         </div>
-        <Login ref={this.loginRef} />
-        <SignUp ref={this.signUpRef} />
-      </ThemeProvider>
+        <Login theme={this.props.theme} ref={this.loginRef} switchForm={this.switchForm}/>
+        <SignUp theme={this.props.theme} ref={this.signUpRef} switchForm={this.switchForm}/>
+      </div>
     )
   }
 }
