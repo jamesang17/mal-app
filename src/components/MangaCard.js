@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import { Card, CardHeader, CardMedia, CardContent } from '@material-ui/core';
-import { Grid, IconButton, Typography } from '@material-ui/core';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { makeStyles } from '@material-ui/core/styles';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-import Glide from '@glidejs/glide';
 
 
 const useStyles = makeStyles((theme) => ({
