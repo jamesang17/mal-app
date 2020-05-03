@@ -45,6 +45,15 @@ class Appbar extends React.Component {
     if (event.currentTarget.innerText.toLowerCase() === "logout") {
       firebase.auth().signOut();
     }
+
+    if (event.currentTarget.innerText.toLowerCase() === "favorites") {
+      console.log("TODO: Make my favorites page.") /* TODO */
+    }
+
+    if (event.currentTarget.innerText.toLowerCase() === "my account") {
+      console.log("Define My Accounts function.") /* TODO */
+    }
+
     this.setState({ anchorEl: null });
   }
 
@@ -67,9 +76,10 @@ class Appbar extends React.Component {
             anchorEl={this.state.anchorEl}
             keepMounted
             open={Boolean(this.state.anchorEl)}
-            onClose={this.handleClose}
+            onClose={this.closeMenu}
           >
-            <MenuItem onClick={this.handleMenuItem}>My account</MenuItem>
+            <MenuItem onClick={this.handleMenuItem}>My Account</MenuItem>
+            <MenuItem onClick={this.handleMenuItem}>Favorites</MenuItem>
             <MenuItem onClick={this.handleMenuItem}>Logout</MenuItem>
           </Menu>
         </div>
@@ -87,7 +97,7 @@ class Appbar extends React.Component {
       );
     }
   }
-  
+
   render() {
     return (
       <ThemeProvider theme={theme} >
