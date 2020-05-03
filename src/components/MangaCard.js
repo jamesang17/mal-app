@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardHeader, CardMedia, CardContent } from '@material-ui/core';
-import { Grid, IconButton, Typography, ListSubheader } from '@material-ui/core';
+import { Grid, IconButton, Typography } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { makeStyles } from '@material-ui/core/styles';
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Carousel } from 'react-responsive-carousel';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -16,32 +18,52 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 function MangaCard(props) {
-    
+   
     const classes = useStyles();
 
+    const [index, setIndex] = useState(0);
+
+    const handleSelect = (selectedIndex, e) => {
+        setIndex(selectedIndex);
+    };
+
+    let mangaArray = [
+        {"Title":"Shokugeki","LastUpdate":"1/1/1111","Description":"Anime description here."},
+        {"Title":"Shokugeki","LastUpdate":"1/1/1111","Description":"Anime description here."},
+        {"Title":"Shokugeki","LastUpdate":"1/1/1111","Description":"Anime description here."},
+        {"Title":"Shokugeki","LastUpdate":"1/1/1111","Description":"Anime description here."},
+        {"Title":"Shokugeki","LastUpdate":"1/1/1111","Description":"Anime description here."},
+        {"Title":"Shokugeki","LastUpdate":"1/1/1111","Description":"Anime description here."},
+        {"Title":"Shokugeki","LastUpdate":"1/1/1111","Description":"Anime description here."},
+        {"Title":"Shokugeki","LastUpdate":"1/1/1111","Description":"Anime description here."},
+        {"Title":"Shokugeki","LastUpdate":"1/1/1111","Description":"Anime description here."},
+        {"Title":"Shokugeki","LastUpdate":"1/1/1111","Description":"Anime description here."},
+        {"Title":"Shokugeki","LastUpdate":"1/1/1111","Description":"Anime description here."},
+        {"Title":"Shokugeki","LastUpdate":"1/1/1111","Description":"Anime description here."},
+    ]
+
     return (
-        <React.Fragment>
-            <Grid item>
-                <Card className={classes.root}>
+        <Carousel autoPlay>
+            {mangaArray.map( mangaItem => (
+                <Card className={classes.root} raised={true}>
                     <CardHeader 
                         action={
                             <IconButton>
                                 <MoreVertIcon />
                             </IconButton>
                         }
-                        title="Shokugeki no Souma"
-                        subheader="Last Update: 1/1/1111"
+                        title={mangaItem['Title']}
+                        subheader={"Last Update: " + mangaItem['LastUpdate']}
                     />
                     <CardMedia /> 
                     <CardContent>
                         <Typography>
-                            Anime synopsis here.
+                            {mangaItem['Description']}
                         </Typography>
                     </CardContent>
                 </Card>
-            </Grid>
-        </React.Fragment>
-        
+            ))}
+        </Carousel>
     )
 }
 

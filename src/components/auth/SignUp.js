@@ -7,6 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import firebase from '../../firebase';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 export default class SignUp extends React.Component {
   constructor(props) {
@@ -16,7 +17,8 @@ export default class SignUp extends React.Component {
       email: "",
       password: "",
       passwordConfirm: "",
-      errors: ""
+      errors: "",
+      hideProgress: true
     };
 
     this.handleOpen = this.handleOpen.bind(this);
@@ -31,6 +33,7 @@ export default class SignUp extends React.Component {
 
   handleClose(event) {
     this.setState({ open: false });
+    this.setState({ errors: "" });
   }
 
   handleChange(event) {
@@ -39,23 +42,25 @@ export default class SignUp extends React.Component {
 
   async handleSignUp(event) {
     const { email, password, passwordConfirm } = this.state;
-    try {
-      if (password.toString() === passwordConfirm.toString()) {
-        await firebase.auth().createUserWithEmailAndPassword(email, password);
-        this.setState({ open: false });
-        alert("Sign up successful!");
-      } else {
-        alert("Passwords do not match.");
-      }
-    } catch(error) {
-      alert(error);
+    if (password.toString() === passwordConfirm.toString()) {
+      await firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then((cred) => {
+          this.setState({ hideProgress: false });
+          this.setState({ open: false });
+          this.setState({ hideProgress: true });
+        })
+        .catch((error) => {
+          this.setState({ errors: error.message });
+        });
+    } else {
+      this.setState({ errors: "Passwords do not match" }); 
     }
   }
 
   render() {
     return (
-      <Dialog open={this.state.open} onClose={this.handleClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Sign Up</DialogTitle>
+      <Dialog open={this.state.open} onClose={this.handleClose} aria-labelledby="form-dialog-title" fullWidth={true}>
+        <DialogTitle id="form-dialog-title" style={{ textAlign: "center" }}>Sign Up</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Sign up to keep track of your favorite animes and mangas, get personalized recommendations and more!
@@ -85,15 +90,25 @@ export default class SignUp extends React.Component {
             fullWidth
             onChange={this.handleChange}
           />
+          <div style={{textAlign: "center"}}>
+            <p style={{ color: "#747474"}}>
+              Already have an account?
+              <Button onClick={event => this.props.switchForm(event, "login")} style={{ padding: 0 }} color="primary" >Login</Button>
+            </p>
+          </div>
+          <p style={{ color: "#E97979" }}>{this.state.errors}</p>
         </DialogContent>
         <DialogActions>
         <Button onClick={this.handleClose} color="primary">
           Cancel
         </Button>
-        <Button onClick={this.handleSignUp} color="primary">
+        <Button onClick={this.handleSignUp} color="primary" variant="contained">
           Sign Up
         </Button>
         </DialogActions>
+        <div hidden={this.state.hideProgress} style={{ textAlign: "center" }}>
+          <CircularProgress />
+        </div>
       </Dialog>
     );
   }
