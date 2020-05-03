@@ -4,7 +4,9 @@ import { Grid, IconButton, Typography } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { makeStyles } from '@material-ui/core/styles';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import { Carousel } from 'react-responsive-carousel';
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
+import Glide from '@glidejs/glide';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -18,14 +20,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 function MangaCard(props) {
-   
     const classes = useStyles();
-
-    const [index, setIndex] = useState(0);
-
-    const handleSelect = (selectedIndex, e) => {
-        setIndex(selectedIndex);
-    };
 
     let mangaArray = [
         {"Title":"Shokugeki","LastUpdate":"1/1/1111","Description":"Anime description here."},
@@ -42,24 +37,36 @@ function MangaCard(props) {
         {"Title":"Shokugeki","LastUpdate":"1/1/1111","Description":"Anime description here."},
     ]
 
+    const responsive = {
+        superLargeDesktop: {
+          // the naming can be any, depends on you.
+          breakpoint: { max: 4000, min: 3000 },
+          items: 5
+        },
+        desktop: {
+          breakpoint: { max: 3000, min: 1024 },
+          items: 4
+        },
+        tablet: {
+          breakpoint: { max: 1024, min: 464 },
+          items: 3
+        },
+        mobile: {
+          breakpoint: { max: 464, min: 0 },
+          items: 1
+        }
+    };
+
     return (
-        <Carousel autoPlay>
-            {mangaArray.map( mangaItem => (
+        <Carousel responsive={responsive}>
+            {mangaArray.map( item => (
                 <Card className={classes.root} raised={true}>
-                    <CardHeader 
-                        action={
-                            <IconButton>
-                                <MoreVertIcon />
-                            </IconButton>
-                        }
-                        title={mangaItem['Title']}
-                        subheader={"Last Update: " + mangaItem['LastUpdate']}
+                    <CardHeader
+                        title={item["Title"]}
+                        subheader={item["LastUpdate"]}
                     />
-                    <CardMedia /> 
                     <CardContent>
-                        <Typography>
-                            {mangaItem['Description']}
-                        </Typography>
+                        {item["Description"]}
                     </CardContent>
                 </Card>
             ))}
