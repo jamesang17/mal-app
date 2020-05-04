@@ -1,8 +1,7 @@
 import React, { useContext } from 'react';
 import Appbar from './Appbar';
 import { AuthContext } from './auth/Auth';
-import MangaCard from './MangaCard';
-import { Grid } from '@material-ui/core';
+import CardCarousel from './CardCarousel';
 
 
 const Home = (props) =>  {
@@ -11,9 +10,8 @@ const Home = (props) =>  {
 
   return (
     <div>
-
       <Appbar theme={props.theme} currentUser={currentUser} />
-      <MangaCard />     
+      <CardCarousel />     
     </div>
   )
 }

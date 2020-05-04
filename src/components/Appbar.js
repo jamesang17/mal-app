@@ -1,13 +1,14 @@
 import React from 'react';
-import theme from '../themes/Theme';
 import { AppBar, Toolbar, Typography,
         Button, IconButton, Menu,
-        MenuItem, TextField, Grid } from '@material-ui/core';
+        MenuItem, InputBase } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import SearchIcon from '@material-ui/icons/Search';
 import firebase from '../firebase';
 import Login from './auth/Login';
 import SignUp from './auth/SignUp';
+import { fade } from '@material-ui/core/styles';
 
 class Appbar extends React.Component {
   constructor(props) {
@@ -102,7 +103,7 @@ class Appbar extends React.Component {
           </Button>
           <Button color="inherit" onClick={e => this.openDialog(e, "signup")}>
             Sign Up
-        </Button>
+          </Button>
         </div>
       );
     }
@@ -117,16 +118,33 @@ class Appbar extends React.Component {
               <IconButton edge="start" color="inherit" aria-label="menu" >
                 <MenuIcon />
               </IconButton>
-              <Grid container alignItems="center" justify="flex-start" direction="row" spacing={10}>
-                <Grid item>
-                  <Typography variant="h6" style={{ flexGrow: 1, flexDirection: 'row' }}>
-                    Anime Guide
-                  </Typography>
-                </Grid> 
-                <Grid item>
-                  <TextField label="Enter manga here..." variant="outlined" style={{width:400}}/>
-                </Grid>            
-              </Grid>
+              <Typography variant="h6" nowrap>
+                Anime Guide
+              </Typography>
+              <div style={{flexGrow: 1, marginLeft: "2vw"}}>
+                <div style={{
+                  position: 'relative',
+                  borderRadius: this.props.theme.shape.borderRadius,
+                  backgroundColor: fade(this.props.theme.palette.common.white, 0.15),
+                  marginRight: "5%",
+                  marginLeft: 0,
+                  width: "35%"
+                }} className="AppBar.css">
+                  <SearchIcon style={{
+                    padding: "2%",
+                    position: 'absolute',
+                    pointerEvents: 'none',
+                  }} />
+                  <InputBase placeholder="Search…" style={{
+                    // vertical padding + font size from searchIcon
+                    padding: '1%',
+                    paddingLeft: `calc(2em + ${this.props.theme.spacing(4)}px)`,
+                    transition: this.props.theme.transitions.create('width'),
+                    width: '100%',
+                    color: "white"
+                  }} />
+                </div>
+              </div>
               {this.displayMenuButtons()}
             </Toolbar>
           </AppBar>
