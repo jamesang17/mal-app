@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Card, CardHeader, CardMedia, CardContent } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 
