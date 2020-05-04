@@ -1,13 +1,9 @@
 import React from 'react';
-
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
+import theme from '../themes/Theme';
+import { AppBar, Toolbar, Typography,
+        Button, IconButton, Menu,
+        MenuItem, TextField, Grid } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import firebase from '../firebase';
 import Login from './auth/Login';
@@ -49,6 +45,15 @@ class Appbar extends React.Component {
     if (event.currentTarget.innerText.toLowerCase() === "logout") {
       firebase.auth().signOut();
     }
+
+    if (event.currentTarget.innerText.toLowerCase() === "favorites") {
+      console.log("TODO: Make my favorites page.") /* TODO */
+    }
+
+    if (event.currentTarget.innerText.toLowerCase() === "my account") {
+      console.log("Define My Accounts function.") /* TODO */
+    }
+
     this.setState({ anchorEl: null });
   }
 
@@ -81,9 +86,10 @@ class Appbar extends React.Component {
             anchorEl={this.state.anchorEl}
             keepMounted
             open={Boolean(this.state.anchorEl)}
-            onClose={this.handleClose}
+            onClose={this.closeMenu}
           >
-            <MenuItem onClick={this.handleMenuItem}>My account</MenuItem>
+            <MenuItem onClick={this.handleMenuItem}>My Account</MenuItem>
+            <MenuItem onClick={this.handleMenuItem}>Favorites</MenuItem>
             <MenuItem onClick={this.handleMenuItem}>Logout</MenuItem>
           </Menu>
         </div>
@@ -101,7 +107,7 @@ class Appbar extends React.Component {
       );
     }
   }
-  
+
   render() {
     return (
       <div>
@@ -111,9 +117,16 @@ class Appbar extends React.Component {
               <IconButton edge="start" color="inherit" aria-label="menu" >
                 <MenuIcon />
               </IconButton>
-              <Typography variant="h6" style={{ flexGrow: 1 }}>
-                Anime Guide
-              </Typography>
+              <Grid container alignItems="center" justify="flex-start" direction="row" spacing={10}>
+                <Grid item>
+                  <Typography variant="h6" style={{ flexGrow: 1, flexDirection: 'row' }}>
+                    Anime Guide
+                  </Typography>
+                </Grid> 
+                <Grid item>
+                  <TextField label="Enter manga here..." variant="outlined" style={{width:400}}/>
+                </Grid>            
+              </Grid>
               {this.displayMenuButtons()}
             </Toolbar>
           </AppBar>
