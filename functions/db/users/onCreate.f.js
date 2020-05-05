@@ -5,8 +5,6 @@ try { admin.initializeApp(functions.config().firebase); } catch (e) {null} // Yo
 exports = module.exports = functions.auth.user().onCreate(user => {
   admin.firestore().collection('users').doc(user.uid).set({
     animes: [],
-    mangas: [],
-    animeRecs: [],
-    mangaRecs: []
+    animeRecs: []
   });
 });
