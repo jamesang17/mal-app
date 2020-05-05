@@ -5,7 +5,7 @@ import 'react-multi-carousel/lib/styles.css';
 import { topAnime } from '../api/Jikan';
 
 
-class AnimeRow extends React.Component {
+class CardCarousel extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -14,7 +14,8 @@ class AnimeRow extends React.Component {
     }
 
     componentDidMount() {
-        let results = topAnime(1).then( res => {
+        // TODO: replace hard coded value with input valus
+        topAnime(1).then( res => {
             this.setState ({
                 results: res
             })     
@@ -81,4 +82,4 @@ class AnimeRow extends React.Component {
     } 
 }
 
-export default AnimeRow;
+export default CardCarousel;
