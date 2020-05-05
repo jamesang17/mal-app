@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardHeader, CardMedia, CardContent } from '@material-ui/core';
+import { Card, CardHeader, CardContent } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-function MangaCard(props) {
+function CardCarousel(props) {
     const classes = useStyles();
 
     let mangaArray = [
@@ -70,4 +70,4 @@ function MangaCard(props) {
     )
 }
 
-export default MangaCard;
+export default CardCarousel;

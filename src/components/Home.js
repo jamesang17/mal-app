@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import Appbar from './Appbar';
 import { AuthContext } from './auth/Auth';
-import MangaCard from './MangaCard';
+import CardCarousel from './CardCarousel';
 import {topAnime} from '../api/functions/top';
 
 
@@ -14,7 +14,7 @@ const Home = (props) =>  {
   return (
     <div>
       <Appbar theme={props.theme} currentUser={currentUser} />
-      <MangaCard />     
+      <CardCarousel />     
     </div>
   )
 }
