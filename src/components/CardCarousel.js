@@ -62,13 +62,13 @@ class CardCarousel extends React.Component {
                 showDots={true}
             >
                 {this.state.results.map( item => (
-                    <Card style={{maxWidth: "20vw" , padding:"2%", margin:"5%", height:"85%"}} raised={true}>
+                    <Card style={{maxWidth: "20vw" , padding:"2%", margin:"5%", height:"85%"}} raised={true} key={item["rank"]}>
                         <CardHeader
                             title={item["title"]}
                             subheader={"Start Date: " + item["start_date"]}
                         />
                         <CardMedia 
-                            square
+                            square="true"
                             image={item["image_url"]}
                             style={cardMedia.media}
                         />

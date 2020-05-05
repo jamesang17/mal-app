@@ -119,7 +119,7 @@ class Appbar extends React.Component {
               <IconButton edge="start" color="inherit" aria-label="menu" >
                 <MenuIcon />
               </IconButton>
-              <Typography variant="h6" nowrap>
+              <Typography variant="h6" nowrap="true">
                 Anime Guide
               </Typography>
               <div style={{flexGrow: 1, marginLeft: "2vw"}}>
