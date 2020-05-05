@@ -1,17 +1,14 @@
 import React from 'react';
-
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
+import { AppBar, Toolbar, Typography,
+        Button, IconButton, Menu,
+        MenuItem, InputBase } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import SearchIcon from '@material-ui/icons/Search';
 import firebase from '../firebase';
 import Login from './auth/Login';
 import SignUp from './auth/SignUp';
+import { fade } from '@material-ui/core/styles';
 
 class Appbar extends React.Component {
   constructor(props) {
@@ -49,6 +46,15 @@ class Appbar extends React.Component {
     if (event.currentTarget.innerText.toLowerCase() === "logout") {
       firebase.auth().signOut();
     }
+
+    if (event.currentTarget.innerText.toLowerCase() === "favorites") {
+      console.log("TODO: Make my favorites page.") /* TODO */
+    }
+
+    if (event.currentTarget.innerText.toLowerCase() === "my account") {
+      console.log("Define My Accounts function.") /* TODO */
+    }
+
     this.setState({ anchorEl: null });
   }
 
@@ -81,9 +87,10 @@ class Appbar extends React.Component {
             anchorEl={this.state.anchorEl}
             keepMounted
             open={Boolean(this.state.anchorEl)}
-            onClose={this.handleClose}
+            onClose={this.closeMenu}
           >
-            <MenuItem onClick={this.handleMenuItem}>My account</MenuItem>
+            <MenuItem onClick={this.handleMenuItem}>My Account</MenuItem>
+            <MenuItem onClick={this.handleMenuItem}>Favorites</MenuItem>
             <MenuItem onClick={this.handleMenuItem}>Logout</MenuItem>
           </Menu>
         </div>
@@ -96,12 +103,12 @@ class Appbar extends React.Component {
           </Button>
           <Button color="inherit" onClick={e => this.openDialog(e, "signup")}>
             Sign Up
-        </Button>
+          </Button>
         </div>
       );
     }
   }
-  
+
   render() {
     return (
       <div>
@@ -111,9 +118,33 @@ class Appbar extends React.Component {
               <IconButton edge="start" color="inherit" aria-label="menu" >
                 <MenuIcon />
               </IconButton>
-              <Typography variant="h6" style={{ flexGrow: 1 }}>
+              <Typography variant="h6" nowrap>
                 Anime Guide
               </Typography>
+              <div style={{flexGrow: 1, marginLeft: "2vw"}}>
+                <div style={{
+                  position: 'relative',
+                  borderRadius: this.props.theme.shape.borderRadius,
+                  backgroundColor: fade(this.props.theme.palette.common.white, 0.15),
+                  marginRight: "5%",
+                  marginLeft: 0,
+                  width: "35%"
+                }} className="AppBar.css">
+                  <SearchIcon style={{
+                    padding: "2%",
+                    position: 'absolute',
+                    pointerEvents: 'none',
+                  }} />
+                  <InputBase placeholder="Search…" style={{
+                    // vertical padding + font size from searchIcon
+                    padding: '1%',
+                    paddingLeft: `calc(2em + ${this.props.theme.spacing(4)}px)`,
+                    transition: this.props.theme.transitions.create('width'),
+                    width: '100%',
+                    color: "white"
+                  }} />
+                </div>
+              </div>
               {this.displayMenuButtons()}
             </Toolbar>
           </AppBar>
