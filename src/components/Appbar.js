@@ -78,6 +78,7 @@ class Appbar extends React.Component {
             edge="end" aria-label="account of current user"
             aria-controls="menu-appbar" aria-haspopup="true"
             color="inherit"
+            style={{ marginRight: "5%"}}
             onClick={this.openMenu}
           >
             <AccountCircle />
@@ -118,7 +119,7 @@ class Appbar extends React.Component {
               <IconButton edge="start" color="inherit" aria-label="menu" >
                 <MenuIcon />
               </IconButton>
-              <Typography variant="h6" nowrap>
+              <Typography variant="h6" nowrap="true">
                 Anime Guide
               </Typography>
               <div style={{flexGrow: 1, marginLeft: "2vw"}}>
