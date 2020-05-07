@@ -1,7 +1,7 @@
-import { searchAnime, searchManga, searchCharacter, SearchObj } from './functions/search';
-import { topAnime, topManga, AnimeTopTypes, MangaTopTypes } from './functions/top';
-import { getAnimeInGenre, getMangaInGenre, GenreIds, GenreObj } from './functions/genre';
-import { getAnimeInfo, getAnimeRecommendations, getAnimeReviews, getAnimeStats } from './functions/anime';
+import { searchAnime, searchManga, searchCharacter, SearchObj } from './functions/Jikan/search';
+import { topAnime, topManga, AnimeTopTypes, MangaTopTypes } from './functions/Jikan/top';
+import { getAnimeInGenre, getMangaInGenre, GenreIds, GenreObj } from './functions/Jikan/genre';
+import { getAnimeInfo, getAnimeRecommendations, getAnimeReviews, getAnimeStats } from './functions/Jikan/anime';
 import { Anime } from './models/Anime';
 
 export { 
