@@ -7,14 +7,14 @@ export class Anime {
    * @param {String} malId - the unique id for an anime
    * @param {String} imageUrl - the unique image url for an anime
    * @param {String} title - the title of the anime
-   * @param {String} parentRecMalId - the id of the parent anime that a recommendation is tied to. 
+   * @param {Anime[]} recommendations - the list of recommended animes 
    * Defaults to NULL if not specified
    */
-  constructor(malId,imageUrl,title,parentRecMalId=null) {
+  constructor(malId, imageUrl, title, recommendations=null) {
     this.malId = malId;
     this.imageUrl = imageUrl;
     this.title = title;
-    this.parentRecMalId = parentRecMalId;
+    this.recommendations = recommendations;
   }
 
   getMalId() {
@@ -31,13 +31,13 @@ export class Anime {
 
   /**
    * Sets the parent mal id for a recommendation
-   * @param {String} parentRecMalId
+   * @param {Anime[]} recommendations
    */
-  setParentRecMalId(parentRecMalId) {
-    this.parentRecMalId = parentRecMalId;
+  setRecommendations(recommendations) {
+    this.recommendations = recommendations;
   }
 
-  getParentRecMalId() {
-    return this.parentRecMalId;
+  getRecommendations() {
+    return this.recommendations;
   }
 }

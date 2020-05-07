@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { sleep } from '../utils/sleepUtil';
+import { sleep } from '../../utils/sleepUtil';
 
 const defaultLimit = 10;
 const defaultPage = 1;
