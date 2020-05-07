@@ -27,12 +27,17 @@ export function GenreObj(genreId) {
  * @param {GenreObj} data - The genre object used to get animes for a specific genre.
  * Properties: genreId
  */
-export async function getAnimeInGenre(data) {
+export async function getAnimeInGenre(genreId) {
   await sleep();
-  if (data == null || data.genreId == null) return [];
-  return await axios.get(`https://api.jikan.moe/v3/genre/anime/${data.genreId}`)
-    .then((res) => res.data.anime)
+  if (genreId == null) return [];
+  console.log("No null return.")
+  return await axios.get(`https://api.jikan.moe/v3/genre/anime/${genreId}/1`)
+    .then((res) => {
+      console.log(res.data.anime)
+      return res.data.anime
+    })
     .catch((error) => console.log(error));
+    
 }
 
 /**
@@ -40,10 +45,10 @@ export async function getAnimeInGenre(data) {
  * @param {GenreObj} data - The genre object used to get mangas for a specific genre.
  * Properties: genreId
  */
-export async function getMangaInGenre(data) {
+export async function getMangaInGenre(genreId) {
   await sleep();
-  if (data == null || data.genreId == null) return [];
-  return await axios.get(`https://api.jikan.moe/v3/genre/manga/${data.genreId}`)
+  if (genreId == null) return [];
+  return await axios.get(`https://api.jikan.moe/v3/genre/manga/${genreId}/1`)
     .then((res) => res.data.manga)
     .catch((error) => console.log(error));
 }
