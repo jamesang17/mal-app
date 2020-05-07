@@ -1,20 +1,15 @@
 import firebase from '../../../firebase';
-
-class AnimeUser {
-  constructor(readonly animes: Number[]) {
-    this.animes = animes;
-  }
-}
+import { Anime } from '../../models/Anime'; 
 
 export const animeConverter = {
-  toFirestore(animeUser: AnimeUser): firebase.firestore.DocumentData {
-    return { animes: animeUser.animes };
+  toFirestore(anime: Anime): firebase.firestore.DocumentData {
+    return { title: anime.title, imageUrl: anime.imageUrl, recommendations: anime.recommendations };
   },
   fromFirestore(
     snapshot: firebase.firestore.QueryDocumentSnapshot,
     options: firebase.firestore.SnapshotOptions
-  ): AnimeUser {
+  ): Anime {
     const data = snapshot.data(options)!;
-    return new AnimeUser(data.animes);
+    return new Anime(snapshot.id, data.title, data.imageUrl, data.recommendations);
   }
 }
