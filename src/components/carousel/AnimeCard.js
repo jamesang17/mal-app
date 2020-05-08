@@ -31,7 +31,6 @@ export default function AnimeCard(props) {
           malId={props.item["mal_id"]} 
           title={props.item["title"]}
           imageUrl={props.item["image_url"]}
-          showBackdrop={props.showBackdrop}
         />
       </CardActions>
     </Card>

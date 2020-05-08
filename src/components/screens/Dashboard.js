@@ -13,14 +13,7 @@ const Dashboard = (props) => {
 
     const currentUser = props.currentUser;
     const [animeResMap, setAnimeResMap] = useState(new Map());
-    // const [animeGenre, setGenre] = useState([]);
-    // const [topAnimeResults, setTopAnime] = useState([]);
     const [userAnimeList, setUserAnimeList] = useState(new Set());
-    const [backdrop, setBackdrop] = useState(false);
-
-    const showBackdrop = (value) => {
-        setBackdrop(value);
-    }
 
     useEffect( () => {
         const fetchAnimes = async () => {
@@ -45,17 +38,7 @@ const Dashboard = (props) => {
             // });
             setAnimeResMap(tempAnimeResMap);
         }
-        // const fetchTop = () => {
-        //     topAnime().then( res => {
-        //         setTopAnime(res);
-        //     });
-        // } 
 
-        // const fetchGenre = () => {
-        //     getAnimeInGenre(GenreIds.ACTION).then( res => {
-        //         setGenre(res);
-        //     });
-        // }
         const fetchUserAnimes = async (user) => {
             if (user == null) return;
             await getSavedAnimes(user.uid).then(res => {
@@ -63,8 +46,6 @@ const Dashboard = (props) => {
             })
         }
         fetchUserAnimes(currentUser);
-        // fetchGenre();
-        // fetchTop();
         fetchAnimes();
     }, [currentUser]);
 
@@ -81,7 +62,6 @@ const Dashboard = (props) => {
                         animeList={value}
                         userAnimeList={userAnimeList}
                         currentUser={currentUser}
-                        showBackdrop={showBackdrop}
                     />    
                 </React.Fragment>
             )
@@ -100,12 +80,7 @@ const Dashboard = (props) => {
         )
     }
     return (
-        <React.Fragment>
-            <Backdrop open={backdrop} style={{ zIndex: 999 ,color: "#fff" }} onClick={e => setBackdrop(false)}>
-                <CircularProgress style={{ color: "white" }} />
-            </Backdrop>
-            <Carousels animeResMap={animeResMap} />
-        </React.Fragment>        
+        <Carousels animeResMap={animeResMap} />
     )
 }
 

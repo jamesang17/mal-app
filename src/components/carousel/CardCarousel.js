@@ -44,7 +44,6 @@ const CardCarousel = (props) => {
                 <AnimeCard 
                     item={item} 
                     userAnimeList={props.userAnimeList}
-                    showBackdrop={props.showBackdrop}
                 />
             ))}
         </Carousel>
