@@ -40,11 +40,15 @@ const Dashboard = (props) => {
         }
 
         const fetchUserAnimes = async (user) => {
-            if (user == null) return;
-            await getSavedAnimes(user.uid).then(res => {
-                setUserAnimeList(new Set(res));
-            })
+            if (user == null) {
+                setUserAnimeList(new Set());
+            } else {
+                await getSavedAnimes(user.uid).then(res => {
+                    setUserAnimeList(new Set(res));
+                })
+            }
         }
+        console.log(currentUser);
         fetchUserAnimes(currentUser);
         fetchAnimes();
     }, [currentUser]);
@@ -61,7 +65,6 @@ const Dashboard = (props) => {
                     <CardCarousel 
                         animeList={value}
                         userAnimeList={userAnimeList}
-                        currentUser={currentUser}
                     />    
                 </React.Fragment>
             )
@@ -70,9 +73,7 @@ const Dashboard = (props) => {
         return parentContainer;
     }
 
-    if (animeResMap.size === 0 ||
-        userAnimeList.size === 0 || 
-        currentUser == null) {
+    if (animeResMap.size === 0) {
         return (
             <Backdrop open={true} style={{color: "#fff"}}>
                 <CircularProgress style={{color: "white"}}/>

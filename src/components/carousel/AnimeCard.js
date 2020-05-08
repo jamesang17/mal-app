@@ -27,7 +27,6 @@ export default function AnimeCard(props) {
       <CardActions>
         <FavButton
           userAnimeList={props.userAnimeList}
-          currentUser={props.currentUser}
           malId={props.item["mal_id"]} 
           title={props.item["title"]}
           imageUrl={props.item["image_url"]}
