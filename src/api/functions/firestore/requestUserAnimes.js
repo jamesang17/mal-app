@@ -1,5 +1,5 @@
 import firebase from '../../../firebase';
-import { userConverter } from './UserConverterrter';
+import { userConverter } from './UserConverter';
 
 /**
  * Returns a list of {@code Anime} objects for a specific user from firestore

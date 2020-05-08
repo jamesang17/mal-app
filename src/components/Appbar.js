@@ -1,7 +1,7 @@
 import React from 'react';
 import { AppBar, Toolbar, Typography,
         Button, IconButton, Menu,
-        MenuItem, InputBase } from '@material-ui/core';
+        MenuItem, InputBase, Backdrop, CircularProgress } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import SearchIcon from '@material-ui/icons/Search';
@@ -15,6 +15,7 @@ class Appbar extends React.Component {
     super(props);
     this.state = {
       anchorEl: null,
+      backdrop: false
     }
     this.signUpRef = React.createRef();
     this.loginRef = React.createRef();
@@ -43,8 +44,11 @@ class Appbar extends React.Component {
   }
 
   handleMenuItem(event) {
+    this.setState({ backdrop: true });
     if (event.currentTarget.innerText.toLowerCase() === "logout") {
-      firebase.auth().signOut();
+      firebase.auth().signOut().then(() => {
+        this.setState({ backdrop: false});
+      });
     }
 
     if (event.currentTarget.innerText.toLowerCase() === "favorites") {
@@ -152,6 +156,11 @@ class Appbar extends React.Component {
         </div>
         <Login theme={this.props.theme} ref={this.loginRef} switchForm={this.switchForm}/>
         <SignUp theme={this.props.theme} ref={this.signUpRef} switchForm={this.switchForm}/>
+        <div>
+          <Backdrop open={this.state.backdrop} style={{ color: "#fff", zIndex: 999 }}>
+            <CircularProgress style={{ color: "white" }} />
+          </Backdrop>
+        </div>
       </div>
     )
   }

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import Appbar from './Appbar';
 import { AuthContext } from './auth/Auth';
-import Dashboard from './Dashboard';
+import Dashboard from './screens/Dashboard';
 
 
 const Home = (props) =>  {
@@ -10,7 +10,7 @@ const Home = (props) =>  {
   return (
     <div>
       <Appbar theme={props.theme} currentUser={currentUser} />
-      <Dashboard />     
+      <Dashboard currentUser={currentUser} />     
     </div>
   )
 }

@@ -30,10 +30,8 @@ export function GenreObj(genreId) {
 export async function getAnimeInGenre(genreId) {
   await sleep();
   if (genreId == null) return [];
-  console.log("No null return.")
   return await axios.get(`https://api.jikan.moe/v3/genre/anime/${genreId}/1`)
     .then((res) => {
-      console.log(res.data.anime)
       return res.data.anime
     })
     .catch((error) => console.log(error));
