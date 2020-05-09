@@ -4,7 +4,7 @@ import { searchAnime, searchManga, searchCharacter,
     getAnimeInGenre, GenreIds,
     getAnimeInfo, getAnimeRecommendations, getAnimeReviews, getAnimeStats,
     Anime } from '../../api/Jikan';
-import { getSavedAnimes } from '../../api/firestore';
+import { getSavedAnimeIds, getSavedAnimes } from '../../api/firestore';
 import CardCarousel from '../carousel/CardCarousel';
 import { CircularProgress, Backdrop, Typography } from '@material-ui/core';
 
@@ -13,7 +13,8 @@ const Dashboard = (props) => {
 
     const currentUser = props.currentUser;
     const [animeResMap, setAnimeResMap] = useState(new Map());
-    const [userAnimeList, setUserAnimeList] = useState(new Set());
+    const [userAnimeIdsList, setUserAnimeIdsList] = useState(new Set());
+    const [userAnimes, setUserAnimes] = useState([]);
 
     useEffect( () => {
         const fetchAnimes = async () => {
@@ -41,14 +42,18 @@ const Dashboard = (props) => {
 
         const fetchUserAnimes = async (user) => {
             if (user == null) {
-                setUserAnimeList(new Set());
+                setUserAnimeIdsList(new Set());
             } else {
+                await getSavedAnimeIds(user.uid).then(res => {
+                    setUserAnimeIdsList(new Set(res));
+                });
                 await getSavedAnimes(user.uid).then(res => {
-                    setUserAnimeList(new Set(res));
+                    console.log(res);
+                    setUserAnimes(res);
                 })
             }
         }
-        console.log(currentUser);
+
         fetchUserAnimes(currentUser);
         fetchAnimes();
     }, [currentUser]);
@@ -64,7 +69,7 @@ const Dashboard = (props) => {
                 <React.Fragment>
                     <CardCarousel 
                         animeList={value}
-                        userAnimeList={userAnimeList}
+                        userAnimeList={userAnimeIdsList}
                     />    
                 </React.Fragment>
             )

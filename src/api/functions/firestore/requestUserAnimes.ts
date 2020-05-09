@@ -8,7 +8,7 @@ import { Anime } from '../../models/Anime';
  * 
  * @param {String} uid - user id from the firebaseauth user object
  */
-export async function getSavedAnimes(uid: string): Promise<Number[]> {
+export async function getSavedAnimeIds(uid: string): Promise<Number[]> {
   // get AnimeUser object for a specific user
   const animeSnap = await firebase.firestore()
     .collection('users')
@@ -22,11 +22,11 @@ export async function getSavedAnimes(uid: string): Promise<Number[]> {
 }
 
 /**
- * Returns a list of animes
+ * Returns a list of {@code Anime} objects
  * @param {String} uid 
  */
-export async function getSavedAndRecommendedAnimes(uid: string): Promise<Anime[]> {
-  const savedAnimeIds = await getSavedAnimes(uid);
+export async function getSavedAnimes(uid: string): Promise<Anime[]> {
+  const savedAnimeIds = await getSavedAnimeIds(uid);
   if (savedAnimeIds.length === 0) return [];
   // get the anime objects using the mal ids in the users' anime list
   let animes: Anime[] = await getAnimes(savedAnimeIds);
