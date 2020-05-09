@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { searchAnime, searchManga, searchCharacter,
     topAnime, topManga, AnimeTopTypes, MangaTopTypes, SearchObj,
-    getAnimeInGenre, getMangaInGenre, GenreIds, GenreObj,
+    getAnimeInGenre, GenreIds,
     getAnimeInfo, getAnimeRecommendations, getAnimeReviews, getAnimeStats,
     Anime } from '../../api/Jikan';
 import { getSavedAnimes } from '../../api/firestore';
