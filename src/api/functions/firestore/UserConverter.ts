@@ -1,6 +1,6 @@
 import firebase from '../../../firebase';
 
-class AnimeUser {
+export class AnimeUser {
   constructor(readonly animes: Number[]) {
     this.animes = animes;
   }
