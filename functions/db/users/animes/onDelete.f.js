@@ -3,7 +3,7 @@ const admin = require('firebase-admin');
 try { admin.initializeApp(functions.config().firebase); } catch (e) { null } // You do that because the admin SDK can only be initialized once.
 
 async function decrementOrRemoveAnimeDoc(data) {
-  const animeRef = admin.firestore().collection('animes').doc(data.malId.toString());
+  const animeRef = admin.firestore().collection('animes').doc(data.mal_id.toString());
   const doc = await animeRef.get();
   if (doc.data().count === 1) {
     return animeRef.delete();
@@ -20,7 +20,7 @@ exports = module.exports = functions.https.onCall(async (data, context) => {
   const user = admin.firestore().collection('users').doc(context.auth.uid);
 
   return user.update({
-    animes: admin.firestore.FieldValue.arrayRemove(data.anime.malId)
+    animes: admin.firestore.FieldValue.arrayRemove(data.anime.mal_id)
   })
   .then(() => {
     // update the anime saved count in the anime collection    

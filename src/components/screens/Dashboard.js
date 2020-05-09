@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { searchAnime, searchManga, searchCharacter,
-    topAnime, topManga, AnimeTopTypes, MangaTopTypes, SearchObj,
-    getAnimeInGenre, getMangaInGenre, GenreIds, GenreObj,
-    getAnimeInfo, getAnimeRecommendations, getAnimeReviews, getAnimeStats,
-    Anime } from '../../api/Jikan';
-import { getSavedAnimes } from '../../api/firestore';
+import { topAnime, getAnimeInGenre, GenreIds } from '../../api/Jikan';
+import { getSavedAnimeIds, getSavedAnimes } from '../../api/firestore';
 import CardCarousel from '../carousel/CardCarousel';
+import UserDashboard from './user/UserDashboard';
 import { CircularProgress, Backdrop, Typography } from '@material-ui/core';
 
 
@@ -13,7 +10,8 @@ const Dashboard = (props) => {
 
     const currentUser = props.currentUser;
     const [animeResMap, setAnimeResMap] = useState(new Map());
-    const [userAnimeList, setUserAnimeList] = useState(new Set());
+    const [userAnimeIdsList, setUserAnimeIdsList] = useState(new Set());
+    const [userAnimes, setUserAnimes] = useState([]);
 
     useEffect( () => {
         const fetchAnimes = async () => {
@@ -41,14 +39,17 @@ const Dashboard = (props) => {
 
         const fetchUserAnimes = async (user) => {
             if (user == null) {
-                setUserAnimeList(new Set());
+                setUserAnimeIdsList(new Set());
             } else {
+                await getSavedAnimeIds(user.uid).then(res => {
+                    setUserAnimeIdsList(new Set(res));
+                });
                 await getSavedAnimes(user.uid).then(res => {
-                    setUserAnimeList(new Set(res));
-                })
+                    setUserAnimes(res);
+                });
             }
         }
-        console.log(currentUser);
+
         fetchUserAnimes(currentUser);
         fetchAnimes();
     }, [currentUser]);
@@ -64,7 +65,7 @@ const Dashboard = (props) => {
                 <React.Fragment>
                     <CardCarousel 
                         animeList={value}
-                        userAnimeList={userAnimeList}
+                        userAnimeList={userAnimeIdsList}
                     />    
                 </React.Fragment>
             )
@@ -81,7 +82,10 @@ const Dashboard = (props) => {
         )
     }
     return (
-        <Carousels animeResMap={animeResMap} />
+        <React.Fragment>
+            {/* <UserDashboard animes={userAnimes} /> */}
+            <Carousels animeResMap={animeResMap} />
+        </React.Fragment>
     )
 }
 

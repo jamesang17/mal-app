@@ -4,7 +4,7 @@ try { admin.initializeApp(functions.config().firebase); } catch (e) { null } // 
 
 
 function updateAnimesCollection(data) {
-  const animeRef = admin.firestore().collection('animes').doc(data.malId.toString());
+  const animeRef = admin.firestore().collection('animes').doc(data.mal_id.toString());
   return animeRef.get()
     .then((docSnapShot) => {
       if (docSnapShot.exists) {
@@ -15,7 +15,7 @@ function updateAnimesCollection(data) {
       } else {
         return animeRef.set({
           title: data.title,
-          imageUrl: data.imageUrl,
+          image_url: data.image_url,
           recommendations: data.recommendations,
           count: 1
         });
@@ -37,7 +37,7 @@ exports = module.exports = functions.https.onCall(async (data, context) => {
   const doc = await user.get();
 
   // check if duplicate anime, otherwise add
-  if (doc.data().animes.includes(data.anime.malId)) {
+  if (doc.data().animes.includes(data.anime.mal_id)) {
     throw new functions.https.HttpsError(
       'failed-precondition',
       'You have already saved this anime'
@@ -45,7 +45,7 @@ exports = module.exports = functions.https.onCall(async (data, context) => {
   } else {
     // update user anime list with new anime id
     return user.update({
-      animes: admin.firestore.FieldValue.arrayUnion(data.anime.malId)
+      animes: admin.firestore.FieldValue.arrayUnion(data.anime.mal_id)
     })
     .then(() => {
       // update the anime saved count in the anime collection

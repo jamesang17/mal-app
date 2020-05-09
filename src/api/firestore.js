@@ -1,3 +1,3 @@
-import { getSavedAnimes } from './functions/firestore/requestUserAnimes';
+import { getSavedAnimeIds, getSavedAnimes } from './functions/firestore/requestUserAnimes';
 
-export { getSavedAnimes };
+export { getSavedAnimeIds, getSavedAnimes };

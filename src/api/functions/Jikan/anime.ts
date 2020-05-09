@@ -5,7 +5,7 @@ import { sleep } from '../../utils/sleepUtil';
  * Get all information for a specific anime.
  * @param {String} malId - MAL id for a given anime.
  */
-export async function getAnimeInfo(malId) {
+export async function getAnimeInfo(malId: string): Promise<Object> {
   await sleep();
   if (malId == null) return [];
   return await axios.get(`https://api.jikan.moe/v3/anime/${malId}`)
@@ -17,7 +17,7 @@ export async function getAnimeInfo(malId) {
  * Get user generated reviews for a specific anime.
  * @param {String} malId - MAL id for a given anime.
  */
-export async function getAnimeReviews(malId) {
+export async function getAnimeReviews(malId: string): Promise <Object[]> {
   await sleep();
   if (malId == null) return [];
   return await axios.get(`https://api.jikan.moe/v3/anime/${malId}/reviews`)
@@ -29,7 +29,7 @@ export async function getAnimeReviews(malId) {
  * Get list of recommendations and their weightage made by users for a specific anime.
  * @param {String} malId - MAL id for a given anime.
  */
-export async function getAnimeRecommendations(malId) {
+export async function getAnimeRecommendations(malId: string): Promise<Object[]> {
   await sleep();
   if (malId == null) return [];
   return await axios.get(`https://api.jikan.moe/v3/anime/${malId}/recommendations`)
@@ -41,7 +41,7 @@ export async function getAnimeRecommendations(malId) {
  * e.g. how many people scored this anime a 10, 9 etc...
  * @param {String} malId - MAL id for a given anime.
  */
-export async function getAnimeStats(malId) {
+export async function getAnimeStats(malId: string): Promise<Object[]> {
   await sleep();
   if (malId == null) return [];
   return await axios.get(`https://api.jikan.moe/v3/anime/${malId}/stats`)
