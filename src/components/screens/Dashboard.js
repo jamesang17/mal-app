@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { searchAnime, searchManga, searchCharacter,
-    topAnime, topManga, AnimeTopTypes, MangaTopTypes, SearchObj,
-    getAnimeInGenre, GenreIds,
-    getAnimeInfo, getAnimeRecommendations, getAnimeReviews, getAnimeStats,
-    Anime } from '../../api/Jikan';
+import { topAnime, getAnimeInGenre, GenreIds } from '../../api/Jikan';
 import { getSavedAnimeIds, getSavedAnimes } from '../../api/firestore';
 import CardCarousel from '../carousel/CardCarousel';
+import UserDashboard from './user/UserDashboard';
 import { CircularProgress, Backdrop, Typography } from '@material-ui/core';
 
 
@@ -48,9 +45,8 @@ const Dashboard = (props) => {
                     setUserAnimeIdsList(new Set(res));
                 });
                 await getSavedAnimes(user.uid).then(res => {
-                    console.log(res);
                     setUserAnimes(res);
-                })
+                });
             }
         }
 
@@ -86,7 +82,10 @@ const Dashboard = (props) => {
         )
     }
     return (
-        <Carousels animeResMap={animeResMap} />
+        <React.Fragment>
+            {/* <UserDashboard animes={userAnimes} /> */}
+            <Carousels animeResMap={animeResMap} />
+        </React.Fragment>
     )
 }
 

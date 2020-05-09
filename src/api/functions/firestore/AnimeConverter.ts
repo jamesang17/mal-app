@@ -10,6 +10,6 @@ export const animeConverter = {
     options: firebase.firestore.SnapshotOptions
   ): Anime {
     const data = snapshot.data(options)!;
-    return new Anime(snapshot.id, data.title, data.imageUrl, data.recommendations);
+    return new Anime(snapshot.id, data.image_url, data.title, data.recommendations);
   }
 }

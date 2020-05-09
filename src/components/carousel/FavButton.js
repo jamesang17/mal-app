@@ -42,7 +42,7 @@ export default function FavButton(props) {
 
   const handleAdd = async (animeObj) => {
     const animeOnCreate = firebase.functions().httpsCallable('dbUsersAnimesOnCreate');
-    let recs = await getAnimeRecommendations(animeObj.malId).then(res => {
+    let recs = await getAnimeRecommendations(animeObj.mal_id).then(res => {
       return res.splice(0, 5); // get top 5 recs
     }).catch(error => console.log(error));
     animeObj.setRecommendations(recs);
