@@ -2,6 +2,10 @@
  * Object that holds relevant data for a specific anime.
  */
 export class Anime {
+  malId:string;
+  imageUrl:string;
+  title:string;
+  recommendations:Anime[]|null;
   /**
    * 
    * @param {String} malId - the unique id for an anime
@@ -10,22 +14,22 @@ export class Anime {
    * @param {Anime[]} recommendations - the list of recommended animes 
    * Defaults to NULL if not specified
    */
-  constructor(malId, imageUrl, title, recommendations=null) {
+  constructor(malId:string, imageUrl:string, title:string, recommendations=null) {
     this.malId = malId;
     this.imageUrl = imageUrl;
     this.title = title;
     this.recommendations = recommendations;
   }
 
-  getMalId() {
+  getMalId():string {
     return this.malId;
   }
 
-  getImageUrl() {
+  getImageUrl():string {
     return this.imageUrl;
   }
 
-  getTitle() {
+  getTitle():string {
     return this.title;
   }
 
@@ -33,11 +37,11 @@ export class Anime {
    * Sets the parent mal id for a recommendation
    * @param {Anime[]} recommendations
    */
-  setRecommendations(recommendations) {
+  setRecommendations(recommendations: Anime[]) {
     this.recommendations = recommendations;
   }
 
-  getRecommendations() {
+  getRecommendations():Anime[]|null {
     return this.recommendations;
   }
 }
