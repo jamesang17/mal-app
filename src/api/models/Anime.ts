@@ -2,8 +2,8 @@
  * Object that holds relevant data for a specific anime.
  */
 export class Anime {
-  malId:string;
-  imageUrl:string;
+  mal_id:string;
+  image_url:string;
   title:string;
   recommendations:Anime[]|null;
   /**
@@ -15,18 +15,18 @@ export class Anime {
    * Defaults to NULL if not specified
    */
   constructor(malId:string, imageUrl:string, title:string, recommendations=null) {
-    this.malId = malId;
-    this.imageUrl = imageUrl;
+    this.mal_id = malId;
+    this.image_url = imageUrl;
     this.title = title;
     this.recommendations = recommendations;
   }
 
   getMalId():string {
-    return this.malId;
+    return this.mal_id;
   }
 
   getImageUrl():string {
-    return this.imageUrl;
+    return this.image_url;
   }
 
   getTitle():string {
