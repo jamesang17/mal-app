@@ -26,9 +26,9 @@ export async function getSavedAnimeIds(uid: string): Promise<Number[]> {
  * @param {String} uid 
  */
 export async function getSavedAnimes(uid: string): Promise<Anime[]> {
-  const savedAnimeIds = await getSavedAnimeIds(uid);
+  const savedAnimeIds = await getSavedAnimeIds(uid).then(res => {return res});
   if (savedAnimeIds.length === 0) return [];
   // get the anime objects using the mal ids in the users' anime list
-  let animes: Anime[] = await getAnimes(savedAnimeIds);
+  let animes: Anime[] = await getAnimes(savedAnimeIds).then(res => {return res});
   return animes;
 }

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import Appbar from './Appbar';
 import { AuthContext } from './auth/Auth';
-import Dashboard from './screens/Dashboard';
+import Dashboard from './dashboard/Dashboard';
 
 
 const Home = (props) =>  {
