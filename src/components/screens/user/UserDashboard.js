@@ -1,26 +1,33 @@
 import React from 'react';
-import { Grid, ListItem, ListItemText, List } from '@material-ui/core';
+import { Grid, GridList, GridListTile, GridListTileBar, Typography } from '@material-ui/core';
 
 function renderRows(animes) {
   let gridContentMap = new Map();
   let savedList = [];
   let recList = [];
-  console.log(animes);
-  animes.forEach((anime) => {    
+  let ids = new Set();
+  animes.forEach((anime, index) => {  
     savedList.push(
-      <ListItem button key={anime.mal_id}>
-        <ListItemText primary={`${anime.title}`} />
-      </ListItem>
+      <GridListTile key={`${anime.mal_id}+${index}`}>
+        <img src={anime.image_url} alt={anime.mal_id} />
+        <GridListTileBar title={`${anime.title}`} />
+      </GridListTile>
     );
-    anime.recommendations.forEach((rec) => {
-      recList.push(
-        <ListItem button key={rec.mal_id}>
-          <ListItemText primary={`${rec.title}`} />
-        </ListItem> 
-      );
-    });
+    ids.add(parseInt(anime.mal_id));
+    recList = recList.concat(anime.recommendations);
   });
-  gridContentMap.set("recs", recList);
+  let recObjs = [];
+  recList.forEach((rec, index) => {
+    if (!ids.has(rec.mal_id)) {
+      recObjs.push(
+        <GridListTile key={`${rec.mal_id}+${index}`}>
+          <img src={rec.image_url} alt={rec.mal_id} />
+          <GridListTileBar title={`${rec.title}`} />
+        </GridListTile>
+      );
+    }
+  });
+  gridContentMap.set("recs", recObjs);
   gridContentMap.set("saved", savedList);
   return gridContentMap;
 }
@@ -29,20 +36,20 @@ function renderGridContent(animes) {
   let gridContent = [];
   let renderedContent = renderRows(animes);
   gridContent.push(
-    <Grid item xs={12} s={8}>
-      <div>RECOMMENDED ANIMES</div>
-      <List>
+    <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around', overflow: 'hidden'}}>
+      <Typography variant="h5">RECOMMENDED ANIMES</Typography>
+      <GridList cols={4.5} cellHeight={230} style={{ flexWrap: 'nowrap' }} >
         {renderedContent.get("recs")}
-      </List>
-    </Grid>
+      </GridList>
+    </div>
   );
   gridContent.push(
-    <Grid item xs={12} s={4}>
-      <div>SAVED ANIMES</div>
-      <List>
+    <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around', overflow: 'hidden' }}>
+      <Typography variant="h5">SAVED ANIMES</Typography>
+      <GridList cols={4.5} cellHeight={230} style={{ flexWrap: 'nowrap' }} >
         {renderedContent.get("saved")}
-      </List>
-    </Grid>
+      </GridList>
+    </div>
   );
   return gridContent;
 }
@@ -52,7 +59,7 @@ const UserDashboard = (props) => {
   if (animes.length === 0) return null;
   
   return (
-    <Grid container>
+    <Grid container style={{ background: "#F0BBA4", padding: "2%" }}>
       {renderGridContent(animes)} 
     </Grid> 
   )

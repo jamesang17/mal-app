@@ -40,6 +40,7 @@ const Dashboard = (props) => {
         const fetchUserAnimes = async (user) => {
             if (user == null) {
                 setUserAnimeIdsList(new Set());
+                setUserAnimes([]);
             } else {
                 await getSavedAnimeIds(user.uid).then(res => {
                     setUserAnimeIdsList(new Set(res));
@@ -83,7 +84,7 @@ const Dashboard = (props) => {
     }
     return (
         <React.Fragment>
-            {/* <UserDashboard animes={userAnimes} /> */}
+            <UserDashboard animes={userAnimes} />
             <Carousels animeResMap={animeResMap} />
         </React.Fragment>
     )
