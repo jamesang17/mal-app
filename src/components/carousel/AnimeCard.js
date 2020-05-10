@@ -34,7 +34,7 @@ export default function AnimeCard(props) {
         malID={props.item["mal_id"]}
       />
       <Card 
-        style={{ padding: "2%", margin: "5%", height: "85%" }} 
+        style={{ padding: "2%", margin: "5%", height: "85%", cursor: "pointer"}} 
         raised={true} 
         key={props.item["mal_id"]}
         onClick={handleClick}>

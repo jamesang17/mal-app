@@ -37,7 +37,7 @@ const Search = (props) => {
     event.preventDefault();
     if (input.toString().length >= 3) {
       setBackdrop(true);
-      await searchAnime(new SearchObj(input))
+      await searchAnime(new SearchObj(input,20))
         .then((res) => {
           setSearchResults(res);
           setDrawer(true);
@@ -48,7 +48,7 @@ const Search = (props) => {
 
   return (
     <div>
-      <div style={{position: 'relative',marginRight: "5%",marginLeft: 0,width: "50%",}}>
+      <div style={{position: 'relative',marginRight: "5%",marginLeft: 0,width: "35%",}}>
         <form onSubmit={e => handleSearch(e)}>
           <TextField id="search" placeholder="Search..." variant="outlined" fullWidth={true}
             onChange={e => setInput(e.currentTarget.value)}
