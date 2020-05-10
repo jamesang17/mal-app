@@ -1,13 +1,14 @@
 import React from 'react';
 import { AppBar, Toolbar, Typography,
         Button, IconButton, Menu,
-        MenuItem, Backdrop, CircularProgress } from '@material-ui/core';
+        MenuItem } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import firebase from '../firebase';
 import Login from './auth/Login';
 import SignUp from './auth/SignUp';
 import Search from './search/search';
+import CustomBackdrop from './CustomBackdrop';
 
 class Appbar extends React.Component {
   constructor(props) {
@@ -124,9 +125,7 @@ class Appbar extends React.Component {
         <Login theme={this.props.theme} ref={this.loginRef} switchForm={this.switchForm}/>
         <SignUp theme={this.props.theme} ref={this.signUpRef} switchForm={this.switchForm}/>
         <div>
-          <Backdrop open={this.state.backdrop} style={{ color: "#fff", zIndex: 999 }}>
-            <CircularProgress style={{ color: "white" }} />
-          </Backdrop>
+          <CustomBackdrop shouldOpen={this.state.backdrop}/>
         </div>
       </div>
     )
