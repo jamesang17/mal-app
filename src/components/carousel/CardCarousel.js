@@ -4,7 +4,6 @@ import 'react-multi-carousel/lib/styles.css';
 import AnimeCard from './AnimeCard';
 
 
-
 const CardCarousel = (props) => {
 
     // Screen dimensions adjustments

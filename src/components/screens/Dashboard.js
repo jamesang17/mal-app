@@ -28,7 +28,7 @@ const Dashboard = (props) => {
             // });
             // await getAnimeInGenre(GenreIds.ROMANCE).then(res => {
             //     tempAnimeResMap.set("ROMANCE", res);
-            // });
+            //  });
             // await getAnimeInGenre(GenreIds.MECHA).then(res => {
             //     tempAnimeResMap.set("MECHA", res);
             // });
