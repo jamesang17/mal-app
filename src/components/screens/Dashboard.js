@@ -60,17 +60,17 @@ const Dashboard = (props) => {
         props.animeResMap.forEach(function(value,key) {
             let carouselContainer = [];
             carouselContainer.push(
-                <Typography variant="h4">{key}</Typography>
+                <Typography variant="h4" key={`${key}+title`} style={{color:"white"}}>{key}</Typography>
             );
             carouselContainer.push(
-                <React.Fragment>
-                    <CardCarousel 
+                <React.Fragment key={`carousel+${key}`}>
+                    <CardCarousel
                         animeList={value}
                         userAnimeList={userAnimeIdsList}
                     />    
                 </React.Fragment>
             )
-            parentContainer.push(carouselContainer);
+            parentContainer.push(<div key={key}>{carouselContainer}</div>);
         });
         return parentContainer;
     }
@@ -85,7 +85,9 @@ const Dashboard = (props) => {
     return (
         <React.Fragment>
             <UserDashboard animes={userAnimes} />
-            <Carousels animeResMap={animeResMap} />
+            <div style={{ padding: "2%" }} >
+                <Carousels animeResMap={animeResMap} />
+            </div>
         </React.Fragment>
     )
 }

@@ -42,7 +42,8 @@ const CardCarousel = (props) => {
         >
             {props.animeList.map( item => (
                 <AnimeCard 
-                    item={item} 
+                    item={item}
+                    key={item.mal_id}
                     userAnimeList={props.userAnimeList}
                 />
             ))}
