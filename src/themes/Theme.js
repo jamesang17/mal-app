@@ -1,5 +1,6 @@
 // Color Scheme
 // #6BBEBB - light turquoise
+// ##62d9d5 - richer light turquoise
 // #577D9A - light blue 
 // #79769D - light purple 
 // #E97979 - light pink 
