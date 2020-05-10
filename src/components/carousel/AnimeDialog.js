@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Typography, Button } from '@material-ui/core';
-import { CircularProgress, Backdrop } from '@material-ui/core';
 import { useEffect } from 'react';
 import { getAnimeInfo } from '../../api/Jikan';
+import CustomBackdrop from '../CustomBackdrop';
 
 
 export default function AnimeDialog(props) {
@@ -17,13 +17,6 @@ export default function AnimeDialog(props) {
                 setAnimeData(animeData);
             });
         }},[props.openState])
-
-
-    const loadingComponent = (
-        <Backdrop open={true} style={{color: "#fff"}}>
-            <CircularProgress style={{color: "white"}}/>
-        </Backdrop>
-    )
         
     const dialogComponent = (
         <React.Fragment>
@@ -52,7 +45,7 @@ export default function AnimeDialog(props) {
                 open={props.openState}
                 onClose={props.closeFunction}
             >
-                {animeData.length === 0 ? loadingComponent : dialogComponent }
+                {animeData.length === 0 ? <CustomBackdrop shouldOpen={true}/> : dialogComponent }
             </Dialog>
         </React.Fragment>
     ) 
