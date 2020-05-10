@@ -47,16 +47,14 @@ function getTop10RecList(savedIds, recs) {
 
 function renderRows(animes) {
   let gridContentMap = new Map();
-  let savedList = [];
   let recList = [];
   let ids = new Set();
-  animes.forEach((anime, index) => {  
+  animes.forEach((anime) => {  
     ids.add(parseInt(anime.mal_id));
     recList = recList.concat(anime.recommendations);
   });
   let recObjs = getTop10RecList(ids, recList);
   gridContentMap.set("recs", recObjs);
-  gridContentMap.set("saved", savedList);
   return gridContentMap;
 }
 

@@ -36,15 +36,19 @@ class Appbar extends React.Component {
     this.setState({ backdrop: true });
     if (event.currentTarget.innerText.toLowerCase() === "logout") {
       firebase.auth().signOut().then(() => {
-        this.setState({ backdrop: false});
+        window.location.reload();
       });
     }
 
-    if (event.currentTarget.innerText.toLowerCase() === "favorites") {
+    if (event.currentTarget.innerText.toLowerCase() === "home") {
+      this.props.setScreen("");
+      this.setState({ backdrop: false });
       console.log("TODO: Make my favorites page.") /* TODO */
     }
 
     if (event.currentTarget.innerText.toLowerCase() === "my account") {
+      this.props.setScreen("myaccount");
+      this.setState({ backdrop: false });
       console.log("Define My Accounts function.") /* TODO */
     }
 
@@ -83,8 +87,8 @@ class Appbar extends React.Component {
             open={Boolean(this.state.anchorEl)}
             onClose={e => this.setState({ anchorEl: null })}
           >
+            <MenuItem onClick={this.handleMenuItem}>Home</MenuItem>
             <MenuItem onClick={this.handleMenuItem}>My Account</MenuItem>
-            <MenuItem onClick={this.handleMenuItem}>Favorites</MenuItem>
             <MenuItem onClick={this.handleMenuItem}>Logout</MenuItem>
           </Menu>
         </div>
