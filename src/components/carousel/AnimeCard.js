@@ -1,9 +1,13 @@
-import React from 'react';
-import { Card, CardActions, CardMedia, CardContent, Typography } from '@material-ui/core';
+import React, { useState } from 'react';
+import { Card, CardActions, CardMedia, CardContent, Typography,  } from '@material-ui/core';
 import FavButton from './FavButton';
+
+import AnimeDialog from './AnimeDialog';
 
 
 export default function AnimeCard(props) {
+
+  const [animeDialogState, setDialogState] = useState(false);
 
   const cardMedia = {
     media: {
@@ -12,26 +16,47 @@ export default function AnimeCard(props) {
     }
   };
 
+  const handleClick = (event) => {
+    console.log("Anime card clicked")
+    setDialogState(true)
+  }
+
+  const handleClose = (event) => {
+    console.log("Anime card closed")
+    setDialogState(false)
+  }
+
   return (
-    <Card style={{ padding: "2%", margin: "5%", height: "85%" }} raised={true} key={props.item["mal_id"]}>
-      <CardMedia
-        square="true"
-        image={props.item["image_url"]}
-        style={cardMedia.media}
+    <React.Fragment>
+      <AnimeDialog 
+        closeFunction={handleClose}
+        openState={animeDialogState}
+        malID={props.item["mal_id"]}
       />
-      <CardContent>
-        <Typography style={{ fontWeight: "bold" }}>{props.item["title"]}</Typography>
-        <Typography>{"Start Date: " + props.item["start_date"]}</Typography>
-                        Rank: {props.item["rank"]}
-      </CardContent>
-      <CardActions>
-        <FavButton
-          userAnimeList={props.userAnimeList}
-          malId={props.item["mal_id"]} 
-          title={props.item["title"]}
-          imageUrl={props.item["image_url"]}
+      <Card 
+        style={{ padding: "2%", margin: "5%", height: "85%" }} 
+        raised={true} 
+        key={props.item["mal_id"]}
+        onClick={handleClick}>
+        <CardMedia
+          square="true"
+          image={props.item["image_url"]}
+          style={cardMedia.media}
         />
-      </CardActions>
-    </Card>
+        <CardContent>
+          <Typography style={{ fontWeight: "bold" }}>{props.item["title"]}</Typography>
+          <Typography>Start Date: {props.item["start_date"] ? props.item["start_date"] : (props.item["airing_start"]).split("T")[0]}</Typography>
+          <Typography noWrap style={{overflow: "hidden", textOverflow: "ellipsis"}}>{props.item["rank"] ? "Rank: " + props.item["rank"] : null}</Typography>
+        </CardContent>
+        <CardActions>
+          <FavButton
+            userAnimeList={props.userAnimeList}
+            malId={props.item["mal_id"]} 
+            title={props.item["title"]}
+            imageUrl={props.item["image_url"]}
+          />
+        </CardActions>
+      </Card>
+    </React.Fragment>
   )
 }
