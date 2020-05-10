@@ -1,14 +1,11 @@
 import axios from 'axios';
 import { sleep } from '../../utils/sleepUtil';
 
-const defaultLimit = 10;
-const defaultPage = 1;
-
 export class SearchObj {
   query: string;
   limit: Number;
   page: Number;
-  constructor(query: string, limit: Number, page: Number) {  
+  constructor(query: string, limit=10, page=1) {  
     this.query = query;
     this.limit = limit;
     this.page = page;
@@ -16,9 +13,8 @@ export class SearchObj {
 }
 
 const searchQuery = (data: SearchObj): string => {
-  let limit = data.limit === 0 ? defaultLimit : data.limit;
-  let page = data.page === 0 ? defaultPage : data.page;
-  return `q=${data.query}&page=${page}&limit=${limit}`;
+  let query = encodeURI(data.query);
+  return `q=${query}&page=${data.page}&limit=${data.limit}`;
 }
 
 /**

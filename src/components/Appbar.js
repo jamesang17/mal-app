@@ -1,14 +1,14 @@
 import React from 'react';
 import { AppBar, Toolbar, Typography,
         Button, IconButton, Menu,
-        MenuItem, InputBase, Backdrop, CircularProgress } from '@material-ui/core';
+        MenuItem } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import SearchIcon from '@material-ui/icons/Search';
 import firebase from '../firebase';
 import Login from './auth/Login';
 import SignUp from './auth/SignUp';
-import { fade } from '@material-ui/core/styles';
+import Search from './search/search';
+import CustomBackdrop from './CustomBackdrop';
 
 class Appbar extends React.Component {
   constructor(props) {
@@ -19,11 +19,8 @@ class Appbar extends React.Component {
     }
     this.signUpRef = React.createRef();
     this.loginRef = React.createRef();
-    this.openMenu = this.openMenu.bind(this);
-    this.closeMenu = this.closeMenu.bind(this);
     this.handleMenuItem = this.handleMenuItem.bind(this);
     this.openDialog = this.openDialog.bind(this);
-    this.closeMenu = this.closeMenu.bind(this);
     this.switchForm = this.switchForm.bind(this);
   }
 
@@ -33,14 +30,6 @@ class Appbar extends React.Component {
     } else {
       this.signUpRef.current.handleOpen();
     }
-  }
-
-  openMenu(event) {
-    this.setState({ anchorEl : event.currentTarget });
-  }
-
-  closeMenu() {
-    this.setState({ anchorEl : null });
   }
 
   handleMenuItem(event) {
@@ -83,7 +72,7 @@ class Appbar extends React.Component {
             aria-controls="menu-appbar" aria-haspopup="true"
             color="inherit"
             style={{ marginRight: "5%"}}
-            onClick={this.openMenu}
+            onClick={e => this.setState({ anchorEl: e.currentTarget })}
           >
             <AccountCircle />
           </IconButton>
@@ -92,7 +81,7 @@ class Appbar extends React.Component {
             anchorEl={this.state.anchorEl}
             keepMounted
             open={Boolean(this.state.anchorEl)}
-            onClose={this.closeMenu}
+            onClose={e => this.setState({ anchorEl: null })}
           >
             <MenuItem onClick={this.handleMenuItem}>My Account</MenuItem>
             <MenuItem onClick={this.handleMenuItem}>Favorites</MenuItem>
@@ -127,28 +116,7 @@ class Appbar extends React.Component {
                 Anime Guide
               </Typography>
               <div style={{flexGrow: 1, marginLeft: "2vw"}}>
-                <div style={{
-                  position: 'relative',
-                  borderRadius: this.props.theme.shape.borderRadius,
-                  backgroundColor: fade(this.props.theme.palette.common.white, 0.15),
-                  marginRight: "5%",
-                  marginLeft: 0,
-                  width: "35%"
-                }} className="AppBar.css">
-                  <SearchIcon style={{
-                    padding: "2%",
-                    position: 'absolute',
-                    pointerEvents: 'none',
-                  }} />
-                  <InputBase placeholder="Search…" style={{
-                    // vertical padding + font size from searchIcon
-                    padding: '1%',
-                    paddingLeft: `calc(2em + ${this.props.theme.spacing(4)}px)`,
-                    transition: this.props.theme.transitions.create('width'),
-                    width: '100%',
-                    color: "white"
-                  }} />
-                </div>
+                <Search theme={this.props.theme} />
               </div>
               {this.displayMenuButtons()}
             </Toolbar>
@@ -157,9 +125,7 @@ class Appbar extends React.Component {
         <Login theme={this.props.theme} ref={this.loginRef} switchForm={this.switchForm}/>
         <SignUp theme={this.props.theme} ref={this.signUpRef} switchForm={this.switchForm}/>
         <div>
-          <Backdrop open={this.state.backdrop} style={{ color: "#fff", zIndex: 999 }}>
-            <CircularProgress style={{ color: "white" }} />
-          </Backdrop>
+          <CustomBackdrop shouldOpen={this.state.backdrop}/>
         </div>
       </div>
     )

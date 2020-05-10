@@ -3,7 +3,8 @@ import { topAnime, getAnimeInGenre, GenreIds } from '../../api/Jikan';
 import { getSavedAnimeIds, getSavedAnimes } from '../../api/firestore';
 import CardCarousel from '../carousel/CardCarousel';
 import UserDashboard from './user/UserDashboard';
-import { CircularProgress, Backdrop, Typography } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
+import CustomBackdrop from '../CustomBackdrop';
 
 
 const Dashboard = (props) => {
@@ -77,9 +78,7 @@ const Dashboard = (props) => {
 
     if (animeResMap.size === 0) {
         return (
-            <Backdrop open={true} style={{color: "#fff"}}>
-                <CircularProgress style={{color: "white"}}/>
-            </Backdrop>
+            <CustomBackdrop shouldOpen={true} />
         )
     }
     return (
