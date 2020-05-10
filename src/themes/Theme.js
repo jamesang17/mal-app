@@ -1,10 +1,10 @@
 // Color Scheme
-// #6BBEBB
-// #577D9A
-// #79769D
-// #E97979
-// #F0BBA4
-// #F5DFBF
+// #6BBEBB - light turquoise
+// #577D9A - light blue 
+// #79769D - light purple 
+// #E97979 - light pink 
+// #F0BBA4 - peach 
+// #F5DFBF - beige 
 import { createMuiTheme } from '@material-ui/core/styles';
 
 export default createMuiTheme({

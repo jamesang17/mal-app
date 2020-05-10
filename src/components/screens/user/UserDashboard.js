@@ -1,32 +1,60 @@
 import React from 'react';
 import { Grid, GridList, GridListTile, GridListTileBar, Typography } from '@material-ui/core';
 
+function createGridTile(malId, index, imageUrl, title) {
+  return (<GridListTile key={`${malId}+${index}`}>
+    <img src={imageUrl} alt={malId} />
+    <GridListTileBar title={`${title}`} />
+  </GridListTile>)
+}
+
+function createGridList(title, content) {
+  return (
+    <div key={title}>
+      <Typography variant="h5" style={{ color: "white"}}>{title}</Typography>
+      <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around', overflow: 'hidden' }}>
+        <GridList cols={5.25} cellHeight={230} style={{ flexWrap: 'nowrap' }} >
+          {content}
+        </GridList>
+      </div>
+    </div>
+  )
+}
+
+function getTop10RecList(savedIds, recs) {
+  let result = [];
+  recs.sort((a, b) => b.recommendation_count - a.recommendation_count);
+  if (recs.length < 10) {
+    recs.forEach((rec,index) => {
+      if (!savedIds.has(rec.mal_id)) {
+        result.push(createGridTile(rec.mal_id, index, rec.image_url, rec.title))
+        savedIds.add(rec.mal_id); // avoid any duplicate recommended animes
+      }
+    });
+  } else {
+    let index = 0;
+    while (result.length < 10) {
+      let rec = recs[index];
+      if (!savedIds.has(rec.mal_id)) {
+        result.push(createGridTile(rec.mal_id, index, rec.image_url, rec.title))
+        savedIds.add(rec.mal_id); // avoid any duplicate recommended animes
+      }
+      index += 1;
+    }
+  }
+  return result;
+}
+
 function renderRows(animes) {
   let gridContentMap = new Map();
   let savedList = [];
   let recList = [];
   let ids = new Set();
   animes.forEach((anime, index) => {  
-    savedList.push(
-      <GridListTile key={`${anime.mal_id}+${index}`}>
-        <img src={anime.image_url} alt={anime.mal_id} />
-        <GridListTileBar title={`${anime.title}`} />
-      </GridListTile>
-    );
     ids.add(parseInt(anime.mal_id));
     recList = recList.concat(anime.recommendations);
   });
-  let recObjs = [];
-  recList.forEach((rec, index) => {
-    if (!ids.has(rec.mal_id)) {
-      recObjs.push(
-        <GridListTile key={`${rec.mal_id}+${index}`}>
-          <img src={rec.image_url} alt={rec.mal_id} />
-          <GridListTileBar title={`${rec.title}`} />
-        </GridListTile>
-      );
-    }
-  });
+  let recObjs = getTop10RecList(ids, recList);
   gridContentMap.set("recs", recObjs);
   gridContentMap.set("saved", savedList);
   return gridContentMap;
@@ -36,20 +64,7 @@ function renderGridContent(animes) {
   let gridContent = [];
   let renderedContent = renderRows(animes);
   gridContent.push(
-    <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around', overflow: 'hidden'}}>
-      <Typography variant="h5">RECOMMENDED ANIMES</Typography>
-      <GridList cols={4.5} cellHeight={230} style={{ flexWrap: 'nowrap' }} >
-        {renderedContent.get("recs")}
-      </GridList>
-    </div>
-  );
-  gridContent.push(
-    <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around', overflow: 'hidden' }}>
-      <Typography variant="h5">SAVED ANIMES</Typography>
-      <GridList cols={4.5} cellHeight={230} style={{ flexWrap: 'nowrap' }} >
-        {renderedContent.get("saved")}
-      </GridList>
-    </div>
+    createGridList("Top 10 Recommended", renderedContent.get("recs"))
   );
   return gridContent;
 }
@@ -59,7 +74,7 @@ const UserDashboard = (props) => {
   if (animes.length === 0) return null;
   
   return (
-    <Grid container style={{ background: "#F0BBA4", padding: "2%" }}>
+    <Grid container style={{ padding: "2%" }}>
       {renderGridContent(animes)} 
     </Grid> 
   )

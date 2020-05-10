@@ -8,7 +8,7 @@ const Home = (props) =>  {
   const {currentUser} = useContext(AuthContext);
 
   return (
-    <div>
+    <div style={{ background: "#586473"}}>
       <Appbar theme={props.theme} currentUser={currentUser} />
       <Dashboard currentUser={currentUser} />     
     </div>
