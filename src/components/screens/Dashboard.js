@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { topAnime, getAnimeInGenre, GenreIds } from '../../api/Jikan';
 import { getSavedAnimeIds, getSavedAnimes } from '../../api/firestore';
 import CardCarousel from '../carousel/CardCarousel';
-import UserDashboard from './user/UserDashboard';
+import UserDashboard from './UserDashboard';
 import Typography from '@material-ui/core/Typography';
 import CustomBackdrop from '../CustomBackdrop';
 
