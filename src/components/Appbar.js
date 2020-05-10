@@ -36,7 +36,7 @@ class Appbar extends React.Component {
     this.setState({ backdrop: true });
     if (event.currentTarget.innerText.toLowerCase() === "logout") {
       firebase.auth().signOut().then(() => {
-        this.setState({ backdrop: false});
+        window.location.reload();
       });
     }
 
