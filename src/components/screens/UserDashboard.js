@@ -13,7 +13,7 @@ function createGridList(title, content) {
     <div key={title}>
       <Typography variant="h5" style={{ color: "white"}}>{title}</Typography>
       <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around', overflow: 'hidden' }}>
-        <GridList cols={5.25} cellHeight={230} style={{ flexWrap: 'nowrap' }} >
+        <GridList cols={5.25} cellHeight={230} spacing={10} style={{ flexWrap: 'nowrap' }} >
           {content}
         </GridList>
       </div>
@@ -47,16 +47,14 @@ function getTop10RecList(savedIds, recs) {
 
 function renderRows(animes) {
   let gridContentMap = new Map();
-  let savedList = [];
   let recList = [];
   let ids = new Set();
-  animes.forEach((anime, index) => {  
+  animes.forEach((anime) => {  
     ids.add(parseInt(anime.mal_id));
     recList = recList.concat(anime.recommendations);
   });
   let recObjs = getTop10RecList(ids, recList);
   gridContentMap.set("recs", recObjs);
-  gridContentMap.set("saved", savedList);
   return gridContentMap;
 }
 

@@ -13,6 +13,7 @@ export default function AnimeCard(props) {
     media: {
       height: 0,
       paddingTop: '56.25%', // 16:9,'56.25%'
+      cursor: "pointer"
     }
   };
 
@@ -26,6 +27,21 @@ export default function AnimeCard(props) {
     setDialogState(false)
   }
 
+  const createMetadataItem = (value) => {
+    return (<Typography noWrap style={{ overflow: "hidden", textOverflow: "ellipsis" }}>{value}</Typography>);
+  }
+
+  const getMetadata = (anime) => {
+    let metadata = [];
+    if (anime["start_date"]) {
+      metadata.push(createMetadataItem("Start Date: " + anime["start_date"]))
+    } else if (anime["start_date"] == null) {
+      if (anime["airing_start"]) metadata.push(createMetadataItem("Start Date: " + (anime["airing_start"]).split("T")[0]));
+    }    
+    if (anime["rank"]) metadata.push(createMetadataItem("Rank: " + anime["rank"]));
+    return metadata;
+  }
+
   return (
     <React.Fragment>
       <AnimeDialog 
@@ -34,19 +50,18 @@ export default function AnimeCard(props) {
         malID={props.item["mal_id"]}
       />
       <Card 
-        style={{ padding: "2%", margin: "5%", height: "85%" }} 
+        style={{ padding: "2%", margin: "5%", height: "85%"}} 
         raised={true} 
-        key={props.item["mal_id"]}
-        onClick={handleClick}>
+        key={props.item["mal_id"]}>
         <CardMedia
           square="true"
           image={props.item["image_url"]}
           style={cardMedia.media}
+          onClick={handleClick}
         />
         <CardContent>
           <Typography style={{ fontWeight: "bold" }}>{props.item["title"]}</Typography>
-          <Typography>Start Date: {props.item["start_date"] ? props.item["start_date"] : (props.item["airing_start"]).split("T")[0]}</Typography>
-          <Typography noWrap style={{overflow: "hidden", textOverflow: "ellipsis"}}>{props.item["rank"] ? "Rank: " + props.item["rank"] : null}</Typography>
+          {getMetadata(props.item)}
         </CardContent>
         <CardActions>
           <FavButton

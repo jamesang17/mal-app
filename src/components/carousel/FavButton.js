@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import {IconButton, Dialog, CircularProgress} from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import { Anime, getAnimeRecommendations } from '../../api/Jikan';
 import firebase from '../../firebase';
+import CustomBackdrop from '../CustomBackdrop';
 
 export default function FavButton(props) {
 
@@ -57,10 +58,7 @@ export default function FavButton(props) {
 
   return (
     <React.Fragment>
-      <Dialog open={backdrop} style={{ zIndex: 999, color: "#fff" }} 
-        PaperProps={{ style: {background: "transparent", boxShadow: "none"}}} >
-        <CircularProgress style={{color: "white"}} />
-      </Dialog>
+      <CustomBackdrop shouldOpen={backdrop} />
       <IconButton onClick={e => handleClick(e, props.malId, props.title, props.imageUrl, fav)}>
         <FavoriteIcon style={{ color: color }} />
       </IconButton>

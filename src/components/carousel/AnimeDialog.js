@@ -4,6 +4,7 @@ import { CircularProgress, Backdrop, Grid } from '@material-ui/core';
 import { useEffect } from 'react';
 import { getAnimeInfo } from '../../api/Jikan';
 import AnimeCollapse from './AnimeCollapse';
+import CustomBackdrop from '../CustomBackdrop';
 
 
 export default function AnimeDialog(props) {
@@ -84,7 +85,7 @@ export default function AnimeDialog(props) {
                 onClose={props.closeFunction}
                 fullWidth={true}
             >
-                {animeData.length === 0 ? loadingComponent : dialogComponent }
+                {animeData.length === 0 ? <CustomBackdrop shouldOpen={true}/> : dialogComponent }
             </Dialog>
         </React.Fragment>
     ) 
