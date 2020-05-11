@@ -25,7 +25,6 @@ export default function AnimeCollapse(props) {
     
     return (
         <ExpansionPanel 
-            defaultExpanded={props.title === "Synopsis"}
             style={{width:"95%"}}
         >
             <ExpansionPanelSummary
@@ -36,7 +35,7 @@ export default function AnimeCollapse(props) {
                 <Typography className={classes.heading}>{props.title}</Typography>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
-                {Array.isArray(props.content) ? props.content.map( item => (<Typography>{item}</Typography>)) : <Typography>{props.content}</Typography> }
+    {Array.isArray(props.content) ? <ul>{props.content.map( item => (<li>{item}</li>))}</ul> : <Typography>{props.content}</Typography> }
             </ExpansionPanelDetails>
         </ExpansionPanel>
     )

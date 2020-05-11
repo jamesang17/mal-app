@@ -15,6 +15,7 @@ export default function AnimeDialog(props) {
         if (props.openState === true) {
             getAnimeInfo(props.malID).then( res => {
                 setAnimeData(res);
+                console.log(res);
 
                 // Create array of genre
                 let tempArray = [];
@@ -34,17 +35,31 @@ export default function AnimeDialog(props) {
         
     const dialogComponent = (
         <React.Fragment>
-            <DialogTitle>
-                <Typography variant="h5">{animeData["title"]}</Typography>
-                <Typography>{animeData["title_japanese"]}</Typography>
-            </DialogTitle>
             <DialogContent>
+                <Grid container
+                    direction="row"
+                    alignItems="center"
+                    wrap="nowrap"
+                >
+                    <Grid item>
+                        <img src={animeData["image_url"]} alt="anime image" />
+                    </Grid>
+                    <Grid item style={{padding: "5%"}}>
+                        <Typography variant="h6">{animeData["title"]}</Typography>
+                        <Typography style={{paddingBottom: "5%"}}>{animeData["title_japanese"]}</Typography>   
+                        <Typography><b>Status:</b> {animeData["status"]}</Typography>
+                        <Typography><b>Rank:</b> {animeData["rank"]}</Typography>
+                        <Typography><b>Score:</b> {animeData["score"]}</Typography>
+                        <Typography><b>Views:</b> {animeData["members"]}</Typography>    
+                    </Grid>
+                </Grid>
+                <Typography variant="h6" align="left" gutterBottom={true} style={{paddingTop: "2%"}}><b>Synopsis</b></Typography>
+                <Typography gutterBottom={true}>{animeData["synopsis"]}</Typography>
             </DialogContent>
             <Grid container
                 direction="column"
                 alignItems="center"
             >
-                <AnimeCollapse title={"Synopsis"} content={animeData["synopsis"]} />
                 <AnimeCollapse title={"Genre Tags"} content={animeGenre} />
                 <AnimeCollapse title={"Opening Songs"} content={animeData["opening_themes"]} />
                 <AnimeCollapse title={"Closing Songs"} content={animeData["ending_themes"]} />
@@ -67,6 +82,7 @@ export default function AnimeDialog(props) {
             <Dialog
                 open={props.openState}
                 onClose={props.closeFunction}
+                fullWidth={true}
             >
                 {animeData.length === 0 ? loadingComponent : dialogComponent }
             </Dialog>
