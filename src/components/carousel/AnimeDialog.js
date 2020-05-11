@@ -1,72 +1,30 @@
 import React, { useState } from 'react';
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Typography, Button } from '@material-ui/core';
-import { CircularProgress, Backdrop } from '@material-ui/core';
-import { ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails } from '@material-ui/core';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { Dialog, DialogActions, DialogContent, DialogTitle, Typography, Button } from '@material-ui/core';
+import { CircularProgress, Backdrop, Grid } from '@material-ui/core';
 import { useEffect } from 'react';
 import { getAnimeInfo } from '../../api/Jikan';
-import { makeStyles } from '@material-ui/core/styles';
+import AnimeCollapse from './AnimeCollapse';
 
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-      width: '100%',
-    },
-    heading: {
-      fontSize: theme.typography.pxToRem(15),
-      flexBasis: '33.33%',
-      flexShrink: 0,
-    },
-    secondaryHeading: {
-      fontSize: theme.typography.pxToRem(15),
-      color: theme.palette.text.secondary,
-    },
-  }));
-
-function AnimeCollapse(props) {
-
-    const classes = useStyles();
-    const [expanded, setExpanded] = useState(false);
-
-    const handleChange = (panel) => (event, isExpanded) => {
-        setExpanded(isExpanded ? panel : false);
-    };
-
-    return (
-        <ExpansionPanel 
-            expanded={expanded === 'panel1'} 
-            onChange={handleChange('panel1')}
-            style={{width:"90%"}}
-        >
-            <ExpansionPanelSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1bh-content"
-            id="panel1bh-header"
-            >
-                <Typography className={classes.heading}>{props.title}</Typography>
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
-                <Typography>
-                    Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget
-                    maximus est, id dignissim quam.
-                </Typography>
-            </ExpansionPanelDetails>
-        </ExpansionPanel>
-    )
-}
 
 export default function AnimeDialog(props) {
 
     const [animeData, setAnimeData] = useState([]);
+    const [animeGenre, setAnimeGenre] = useState([]);
 
     useEffect( () => {
         if (props.openState === true) {
             getAnimeInfo(props.malID).then( res => {
-                const animeData = res;
-                console.log(animeData)
-                setAnimeData(animeData);
+                setAnimeData(res);
+
+                // Create array of genre
+                let tempArray = [];
+                res["genres"].forEach( item => {
+                    tempArray.push(item["name"]);
+                });
+                setAnimeGenre(tempArray);
+
             });
-        }},[props.openState])
+        }}, [props.openState])
 
     const loadingComponent = (
         <Backdrop open={true} style={{color: "#fff"}}>
@@ -76,17 +34,22 @@ export default function AnimeDialog(props) {
         
     const dialogComponent = (
         <React.Fragment>
-            <DialogTitle
-            >
+            <DialogTitle>
                 <Typography variant="h5">{animeData["title"]}</Typography>
                 <Typography>{animeData["title_japanese"]}</Typography>
             </DialogTitle>
             <DialogContent>
-                <DialogContentText>{animeData["synopsis"]}</DialogContentText>
             </DialogContent>
-            <AnimeCollapse title={"Genre"}/>
-            <AnimeCollapse title={"Opening Theme Songs"}/>
-            <AnimeCollapse title={"Closing Theme Songs"}/>
+            <Grid container
+                direction="column"
+                alignItems="center"
+            >
+                <AnimeCollapse title={"Synopsis"} content={animeData["synopsis"]} />
+                <AnimeCollapse title={"Genre Tags"} content={animeGenre} />
+                <AnimeCollapse title={"Opening Songs"} content={animeData["opening_themes"]} />
+                <AnimeCollapse title={"Closing Songs"} content={animeData["ending_themes"]} />
+            </Grid>
+            
             <DialogActions>
                 <Button
                     onClick={props.closeFunction}
