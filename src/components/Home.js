@@ -3,6 +3,7 @@ import Appbar from './Appbar';
 import { AuthContext } from './auth/Auth';
 import Dashboard from './screens/Dashboard';
 import MyAccount from './screens/MyAccount';
+import { DataProvider } from './screens/DataProvider';
 
 
 const Home = (props) =>  {
@@ -18,7 +19,9 @@ const Home = (props) =>  {
   return (
     <div style={{ background: "#586473", minHeight: "100vh"}}>
       <Appbar theme={props.theme} currentUser={currentUser} setScreen={setScreen} />
-      {screen === "" ? <Dashboard currentUser={currentUser} /> : renderScreen(screen)}
+      <DataProvider>
+        {screen === "" ? <Dashboard /> : renderScreen(screen)}
+      </DataProvider>
     </div>
   )
 }

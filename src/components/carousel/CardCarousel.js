@@ -43,7 +43,6 @@ const CardCarousel = (props) => {
                 <AnimeCard 
                     item={item}
                     key={item.mal_id}
-                    userAnimeList={props.userAnimeList}
                 />
             ))}
         </Carousel>
