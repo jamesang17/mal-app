@@ -48,6 +48,7 @@ const Dashboard = (props) => {
                 });
                 await getSavedAnimes(user.uid).then(res => {
                     setUserAnimes(res);
+                    console.log(res);
                 });
             }
         }
@@ -83,7 +84,7 @@ const Dashboard = (props) => {
     }
     return (
         <React.Fragment>
-            <UserDashboard animes={userAnimes} />
+            <UserDashboard animes={userAnimes} userAnimeList={userAnimeIdsList} />
             <div style={{ padding: "2%" }} >
                 <Carousels animeResMap={animeResMap} />
             </div>
