@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Card, CardActions, CardMedia, CardContent, Typography,  } from '@material-ui/core';
 import FavButton from './FavButton';
-
 import AnimeDialog from './AnimeDialog';
 
 
@@ -48,6 +47,7 @@ export default function AnimeCard(props) {
         closeFunction={handleClose}
         openState={animeDialogState}
         malID={props.item["mal_id"]}
+        userAnimeList={props.userAnimeList}
       />
       <Card 
         style={{ padding: "2%", margin: "5%", height: "85%"}} 

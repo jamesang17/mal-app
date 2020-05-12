@@ -35,7 +35,7 @@ const Dashboard = () => {
     }
     return (
         <React.Fragment>
-            <UserDashboard animes={userAnimes} />
+            <UserDashboard animes={userAnimes} userAnimeList={userAnimeIdsList} />
             <div style={{ padding: "2%" }} >
                 <Carousels animeResMap={animeResMap} />
             </div>
