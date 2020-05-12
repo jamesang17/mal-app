@@ -1,19 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import { Anime, getAnimeRecommendations } from '../../api/Jikan';
 import firebase from '../../firebase';
 import CustomBackdrop from '../CustomBackdrop';
+import { DataContext } from '../screens/DataProvider';
 
 export default function FavButton(props) {
-
+  const { userAnimeIdsSet } = useContext(DataContext);
   const [fav, setFav] = useState(false);
   const [color, setColor] = useState("grey");
   const [backdrop, setBackdrop] = useState(false);
 
   useEffect(() => {
-    if (props.userAnimeList.size > 0) {
-      if (props.userAnimeList.has(props.malId)) {
+    if (userAnimeIdsSet.size > 0) {
+      if (userAnimeIdsSet.has(props.malId)) {
         setFav(true);
         setColor("red");
       }
