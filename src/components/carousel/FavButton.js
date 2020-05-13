@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import IconButton from '@material-ui/core/IconButton';
+import Snackbar from '@material-ui/core/Snackbar';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import { Anime, getAnimeRecommendations } from '../../api/Jikan';
 import firebase from '../../firebase';
@@ -11,6 +12,8 @@ export default function FavButton(props) {
   const [fav, setFav] = useState(false);
   const [color, setColor] = useState("grey");
   const [backdrop, setBackdrop] = useState(false);
+  const [openSnack, setOpenSnack] = useState(false);
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     if (userAnimeIdsSet.size > 0) {
@@ -38,6 +41,8 @@ export default function FavButton(props) {
     }).then(res => {
       setFav(false);
       setColor("grey");
+      setMessage("Removed anime!");
+      setOpenSnack(true);
     }).catch(error => alert(error));
     setBackdrop(false);
   }
@@ -53,7 +58,12 @@ export default function FavButton(props) {
     }).then(res => {
       setFav(true);
       setColor("red");
-    }).catch(error => alert(error));
+      setMessage("Saved Anime!");
+      setOpenSnack(true);
+    }).catch(error => {
+      setMessage(error.message);
+      setOpenSnack(true);
+    });
     setBackdrop(false);
   }
 
@@ -63,6 +73,7 @@ export default function FavButton(props) {
       <IconButton onClick={e => handleClick(e, props.malId, props.title, props.imageUrl, fav)}>
         <FavoriteIcon style={{ color: color }} />
       </IconButton>
+      <Snackbar open={openSnack} autoHideDuration={3000} onClose={e => setOpenSnack(false)} message={message} />
     </React.Fragment>
   )
 }
