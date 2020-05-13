@@ -1,7 +1,7 @@
 import React from 'react';
 import { AppBar, Toolbar, Typography,
         Button, IconButton, Menu,
-        MenuItem } from '@material-ui/core';
+        MenuItem, Snackbar } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import firebase from '../firebase';
@@ -36,7 +36,7 @@ class Appbar extends React.Component {
     this.setState({ backdrop: true });
     if (event.currentTarget.innerText.toLowerCase() === "logout") {
       firebase.auth().signOut().then(() => {
-        window.location.reload();
+        this.setState({ backdrop: false });
       });
     }
 

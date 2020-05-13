@@ -73,7 +73,8 @@ export default function FavButton(props) {
       <IconButton onClick={e => handleClick(e, props.malId, props.title, props.imageUrl, fav)}>
         <FavoriteIcon style={{ color: color }} />
       </IconButton>
-      <Snackbar open={openSnack} autoHideDuration={3000} onClose={e => setOpenSnack(false)} message={message} />
+      <Snackbar open={openSnack} autoHideDuration={3000} style={{zIndex: 999}}
+        onClose={e => setOpenSnack(false)} message={message} />
     </React.Fragment>
   )
 }
