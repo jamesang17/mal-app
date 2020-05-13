@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import { Dialog, DialogActions, DialogContent, DialogTitle, Typography, Button } from '@material-ui/core';
-import { CircularProgress, Backdrop, Grid } from '@material-ui/core';
-import { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Dialog, DialogActions, DialogContent } from '@material-ui/core';
+import { Grid, Typography, Button } from '@material-ui/core';
 import { getAnimeInfo } from '../../api/Jikan';
 import AnimeCollapse from './AnimeCollapse';
 import CustomBackdrop from '../CustomBackdrop';
+import FavButton from './FavButton';
 
+/*  Create state to pull history of dialogs clicked  */
 
 export default function AnimeDialog(props) {
 
@@ -14,7 +15,7 @@ export default function AnimeDialog(props) {
 
     useEffect( () => {
         if (props.openState === true) {
-            getAnimeInfo(props.malID).then( res => {
+            getAnimeInfo(props.malId).then( res => {
                 setAnimeData(res);
                 console.log(res);
 
@@ -26,12 +27,12 @@ export default function AnimeDialog(props) {
                 setAnimeGenre(tempArray);
 
             });
-        }}, [props.openState])
-
-    const loadingComponent = (
-        <Backdrop open={true} style={{color: "#fff"}}>
-            <CircularProgress style={{color: "white"}}/>
-        </Backdrop>
+        }
+        return function cleanUp() {
+            setAnimeData([]);
+            setAnimeGenre([]);
+        }
+        }, [props.openState]
     )
         
     const dialogComponent = (
@@ -65,8 +66,13 @@ export default function AnimeDialog(props) {
                 <AnimeCollapse title={"Opening Songs"} content={animeData["opening_themes"]} />
                 <AnimeCollapse title={"Closing Songs"} content={animeData["ending_themes"]} />
             </Grid>
-            
             <DialogActions>
+                <FavButton 
+                    userAnimeList={props.userAnimeList}
+                    malId={animeData["mal_id"]} 
+                    title={animeData["title"]}
+                    imageUrl={animeData["image_url"]}
+                />
                 <Button
                     onClick={props.closeFunction}
                     color="primary"

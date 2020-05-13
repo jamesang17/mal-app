@@ -1,10 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import AnimeCard from './AnimeCard';
+import AnimeDialog from './AnimeDialog';
 
 
 const CardCarousel = (props) => {
+
+    const [malIdFocus, setIdFocus] = useState(null);
+    
+    const handleClose = (event) => {
+        console.log("Anime card closed");
+        setIdFocus(null)
+    }
+
+    const focusMalId = (malId) => {
+        console.log("Anime card opened");
+        setIdFocus(malId);
+    }
 
     // Screen dimensions adjustments
     const responsive = {
@@ -35,17 +48,26 @@ const CardCarousel = (props) => {
     };
 
     return (
-        <Carousel 
-            responsive={responsive}
-            showDots={true}
-        >
-            {props.animeList.map( item => (
-                <AnimeCard 
-                    item={item}
-                    key={item.mal_id}
-                />
-            ))}
-        </Carousel>
+        <React.Fragment>
+            <AnimeDialog
+                closeFunction={handleClose}
+                openState={Boolean(malIdFocus)}
+                malId={malIdFocus}
+                userAnimeList={props.userAnimeList}
+            />
+            <Carousel 
+                responsive={responsive}
+                showDots={true}
+            >
+                {props.animeList.map( item => (
+                    <AnimeCard 
+                        item={item}
+                        key={item.mal_id}
+                        getMalId={focusMalId}
+                    />
+                ))}
+            </Carousel>
+        </React.Fragment>
     )
 }
 
