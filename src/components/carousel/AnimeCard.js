@@ -1,12 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Card, CardActions, CardMedia, CardContent, Typography,  } from '@material-ui/core';
 import FavButton from './FavButton';
-import AnimeDialog from './AnimeDialog';
 
 
 export default function AnimeCard(props) {
-
-  const [animeDialogState, setDialogState] = useState(false);
 
   const cardMedia = {
     media: {
@@ -15,16 +12,6 @@ export default function AnimeCard(props) {
       cursor: "pointer"
     }
   };
-
-  const handleClick = (event) => {
-    console.log("Anime card clicked")
-    setDialogState(true)
-  }
-
-  const handleClose = (event) => {
-    console.log("Anime card closed")
-    setDialogState(false)
-  }
 
   const createMetadataItem = (value) => {
     return (<Typography noWrap style={{ overflow: "hidden", textOverflow: "ellipsis" }}>{value}</Typography>);
@@ -41,21 +28,19 @@ export default function AnimeCard(props) {
     return metadata;
   }
 
+  const handleClick = (event) => {
+    props.getMalId(props.item.mal_id)
+  }
+
   return (
     <React.Fragment>
-      <AnimeDialog 
-        closeFunction={handleClose}
-        openState={animeDialogState}
-        malID={props.item["mal_id"]}
-        userAnimeList={props.userAnimeList}
-      />
       <Card 
         style={{ padding: "2%", margin: "5%", height: "85%"}} 
         raised={true} 
-        key={props.item["mal_id"]}>
+        key={props.item.mal_id}>
         <CardMedia
           square="true"
-          image={props.item["image_url"]}
+          image={props.item.image_url}
           style={cardMedia.media}
           onClick={handleClick}
         />
@@ -65,9 +50,9 @@ export default function AnimeCard(props) {
         </CardContent>
         <CardActions>
           <FavButton
-            malId={props.item["mal_id"]} 
-            title={props.item["title"]}
-            imageUrl={props.item["image_url"]}
+            malId={props.item.mal_id} 
+            title={props.item.title}
+            imageUrl={props.item.image_url}
           />
         </CardActions>
       </Card>

@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { Dialog, DialogActions, DialogContent, Typography, Button } from '@material-ui/core';
-import { Grid } from '@material-ui/core';
-import { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Dialog, DialogActions, DialogContent } from '@material-ui/core';
+import { Grid, Typography, Button } from '@material-ui/core';
 import { getAnimeInfo } from '../../api/Jikan';
 import AnimeCollapse from './AnimeCollapse';
 import CustomBackdrop from '../CustomBackdrop';
 import FavButton from './FavButton';
 
+/*  Create state to pull history of dialogs clicked  */
 
 export default function AnimeDialog(props) {
 
@@ -15,7 +15,7 @@ export default function AnimeDialog(props) {
 
     useEffect( () => {
         if (props.openState === true) {
-            getAnimeInfo(props.malID).then( res => {
+            getAnimeInfo(props.malId).then( res => {
                 setAnimeData(res);
                 console.log(res);
 
@@ -27,7 +27,13 @@ export default function AnimeDialog(props) {
                 setAnimeGenre(tempArray);
 
             });
-        }}, [props.openState])
+        }
+        return function cleanUp() {
+            setAnimeData([]);
+            setAnimeGenre([]);
+        }
+        }, [props.openState]
+    )
         
     const dialogComponent = (
         <React.Fragment>
