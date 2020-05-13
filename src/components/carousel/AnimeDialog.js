@@ -32,8 +32,7 @@ export default function AnimeDialog(props) {
             setAnimeData([]);
             setAnimeGenre([]);
         }
-        }, [props.openState]
-    )
+        }, [props.openState])
         
     const dialogComponent = (
         <React.Fragment>
