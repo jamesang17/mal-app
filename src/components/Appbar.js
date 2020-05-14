@@ -40,7 +40,7 @@ class Appbar extends React.Component {
       });
     }
 
-    if (event.currentTarget.innerText.toLowerCase() === "home") {
+    if (event.currentTarget.innerText.toLowerCase() === "anime guide") {
       this.props.setScreen("");
       this.setState({ backdrop: false });
       console.log("TODO: Make my favorites page.") /* TODO */
@@ -87,7 +87,6 @@ class Appbar extends React.Component {
             open={Boolean(this.state.anchorEl)}
             onClose={e => this.setState({ anchorEl: null })}
           >
-            <MenuItem onClick={this.handleMenuItem}>Home</MenuItem>
             <MenuItem onClick={this.handleMenuItem}>My Account</MenuItem>
             <MenuItem onClick={this.handleMenuItem}>Logout</MenuItem>
           </Menu>
@@ -113,12 +112,11 @@ class Appbar extends React.Component {
         <div className={this.props.theme.root}>
           <AppBar position="static">
             <Toolbar>
-              <IconButton edge="start" color="inherit" aria-label="menu" >
-                <MenuIcon />
-              </IconButton>
-              <Typography variant="h6" nowrap="true">
-                Anime Guide
-              </Typography>
+              <Button onClick={e => this.handleMenuItem} >
+                <Typography variant="h6" nowrap="true" style={{ color: "white"}}>
+                  Anime Guide
+                </Typography>
+              </Button>
               <div style={{flexGrow: 1, marginLeft: "2vw"}}>
                 <Search theme={this.props.theme} />
               </div>
