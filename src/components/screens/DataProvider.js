@@ -3,6 +3,8 @@ import { AuthContext } from '../auth/Auth';
 import { topAnime, getAnimeInGenre, GenreIds } from '../../api/Jikan';
 import { getSavedAnimeIds, getSavedAnimes } from '../../api/firestore';
 
+const moment = require('moment-timezone');
+
 export const DataContext = React.createContext();
 
 export const DataProvider = ({children}) => {
@@ -27,6 +29,8 @@ export const DataProvider = ({children}) => {
         tempAnimeResMap.set("ROMANCE", res.slice(0, 15));
       });
       setAnimeResMap(tempAnimeResMap);
+      localStorage.setItem("day", JSON.stringify(moment().dayOfYear()));
+      localStorage.setItem("animes", JSON.stringify(Array.from(tempAnimeResMap.entries())));
     }
 
     const fetchUserAnimes = async (user) => {
@@ -43,8 +47,28 @@ export const DataProvider = ({children}) => {
       }
     }
 
+
+    const hydrateFromLocalStorage = () => {
+      let animes = localStorage.getItem("animes");
+      try {
+        animes = new Map(JSON.parse(animes));
+        setAnimeResMap(animes);
+      } catch(e) {
+        console.info(e);
+      }
+    }
+
+    if (localStorage.hasOwnProperty("animes") && localStorage.hasOwnProperty("day")) {
+      let day = JSON.parse(localStorage.getItem("day"));
+      if (day === moment().dayOfYear()) {
+        console.log("using cached data!");
+        hydrateFromLocalStorage();
+      }
+    } else {
+      console.log("getting new data!");
+      fetchAnimes();
+    }
     fetchUserAnimes(currentUser);
-    fetchAnimes();
   }, [currentUser]);
 
   return (
