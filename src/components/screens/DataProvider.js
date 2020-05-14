@@ -18,20 +18,14 @@ export const DataProvider = ({children}) => {
         tempAnimeResMap.set("TOP AIRING", res);
       });
       await getAnimeInGenre(GenreIds.ACTION).then(res => {
-        tempAnimeResMap.set("ACTION", res);
+        tempAnimeResMap.set("ACTION", res.slice(0, 15));
       });
-      // await getAnimeInGenre(GenreIds.COMEDY).then(res => {
-      //     tempAnimeResMap.set("COMEDY", res);
-      // });
-      // await getAnimeInGenre(GenreIds.ROMANCE).then(res => {
-      //     tempAnimeResMap.set("ROMANCE", res);
-      //  });
-      // await getAnimeInGenre(GenreIds.MECHA).then(res => {
-      //     tempAnimeResMap.set("MECHA", res);
-      // });
-      // await getAnimeInGenre(GenreIds.SPORTS).then(res => {
-      //     tempAnimeResMap.set("SPORTS", res);
-      // });
+      await getAnimeInGenre(GenreIds.COMEDY).then(res => {
+        tempAnimeResMap.set("COMEDY", res.slice(0, 15));
+      });
+      await getAnimeInGenre(GenreIds.ROMANCE).then(res => {
+        tempAnimeResMap.set("ROMANCE", res.slice(0, 15));
+      });
       setAnimeResMap(tempAnimeResMap);
     }
 
