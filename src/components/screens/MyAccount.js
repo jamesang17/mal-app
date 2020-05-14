@@ -26,7 +26,7 @@ const MyAccount = (props) => {
     // display 3 cards per row
     animes.forEach((value) => {
       gridContainer.push(
-        <Grid item xs={4}>
+        <Grid item xs={12} sm={4}>
           <AnimeCard item={value} />
         </Grid>
       );

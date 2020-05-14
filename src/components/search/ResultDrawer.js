@@ -1,8 +1,7 @@
-import React, { useState, useContext } from 'react';
-import { Drawer, Typography, GridList, GridListTile, GridListTileBar } from '@material-ui/core';
+import React, { useState } from 'react';
+import { Drawer, Typography, GridList, GridListTile, GridListTileBar, useMediaQuery } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import AnimeDialog from '../carousel/AnimeDialog';
-import { DataContext } from '../screens/DataProvider';
 
 
 const useStyles = makeStyles({
@@ -15,8 +14,9 @@ const useStyles = makeStyles({
 const ResultDrawer = (props) => {
 
   const [malIdFocus, setIdFocus] = useState(null);
-  const {animeResMap,userAnimes} = useContext(DataContext);
   const styles = useStyles();
+  const desktop = useMediaQuery('(min-width:600px)');
+  const cols = desktop ? 5.25 : 1.5;
 
   const handleClose = (event) => {
     console.log("Anime card closed");
@@ -47,7 +47,7 @@ const ResultDrawer = (props) => {
         </Typography>
         <div style={{ display: 'flex', flexWrap: 'wrap', 
           justifyContent: 'space-around', overflow: 'hidden', padding:"0" }}>
-          <GridList cols={5.25} cellHeight={300} spacing={10} style={{ flexWrap: 'nowrap' }} >
+          <GridList cols={cols} cellHeight={300} spacing={10} style={{ flexWrap: 'nowrap' }} >
             {createGridTiles(props.results)}
           </GridList>
         </div>
@@ -56,7 +56,6 @@ const ResultDrawer = (props) => {
         closeFunction={handleClose}
         openState={Boolean(malIdFocus)}
         malId={malIdFocus}
-        userAnimeList={userAnimes} 
       />
     </Drawer>
   )

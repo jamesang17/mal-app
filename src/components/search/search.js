@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextField, InputAdornment } from '@material-ui/core';
+import { TextField, InputAdornment, useMediaQuery } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import { makeStyles } from '@material-ui/core/styles';
 import { searchAnime, SearchObj } from '../../api/Jikan';
@@ -32,6 +32,8 @@ const Search = (props) => {
   const [drawer, setDrawer] = useState(false);
   const [backdrop, setBackdrop] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
+  const desktop = useMediaQuery('(min-width:600px)');
+  const width = desktop ? "35%" : "100%";
 
   const handleSearch = async (event) => {
     event.preventDefault();
@@ -48,7 +50,7 @@ const Search = (props) => {
 
   return (
     <div>
-      <div style={{position: 'relative',marginRight: "5%",marginLeft: 0,width: "35%",}}>
+      <div style={{position: 'relative',marginRight: "5%",marginLeft: 0,width: width }}>
         <form onSubmit={e => handleSearch(e)}>
           <TextField id="search" placeholder="Search..." variant="outlined" fullWidth={true}
             onChange={e => setInput(e.currentTarget.value)}
