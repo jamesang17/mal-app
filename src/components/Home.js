@@ -18,8 +18,8 @@ const Home = (props) =>  {
 
   return (
     <div style={{ background: "#586473", minHeight: "100vh"}}>
-      <Appbar theme={props.theme} currentUser={currentUser} setScreen={setScreen} />
       <DataProvider>
+        <Appbar theme={props.theme} currentUser={currentUser} setScreen={setScreen} />
         {screen === "" ? <Dashboard /> : renderScreen(screen)}
       </DataProvider>
     </div>

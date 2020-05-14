@@ -32,8 +32,7 @@ export default function AnimeDialog(props) {
             setAnimeData([]);
             setAnimeGenre([]);
         }
-        }, [props.openState]
-    )
+        }, [props.openState])
         
     const dialogComponent = (
         <React.Fragment>
@@ -41,12 +40,12 @@ export default function AnimeDialog(props) {
                 <Grid container
                     direction="row"
                     alignItems="center"
-                    wrap="nowrap"
+                    justify="space-evenly"
                 >
                     <Grid item>
                         <img src={animeData["image_url"]} alt="anime image" />
                     </Grid>
-                    <Grid item style={{padding: "5%"}}>
+                    <Grid item style={{padding: "5%", maxWidth: "17em"}}>
                         <Typography variant="h6">{animeData["title"]}</Typography>
                         <Typography style={{paddingBottom: "5%"}}>{animeData["title_japanese"]}</Typography>   
                         <Typography><b>Status:</b> {animeData["status"]}</Typography>
@@ -89,7 +88,6 @@ export default function AnimeDialog(props) {
             <Dialog
                 open={props.openState}
                 onClose={props.closeFunction}
-                fullWidth={true}
             >
                 {animeData.length === 0 ? <CustomBackdrop shouldOpen={true}/> : dialogComponent }
             </Dialog>
