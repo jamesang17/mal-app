@@ -112,7 +112,7 @@ class Appbar extends React.Component {
         <div className={this.props.theme.root}>
           <AppBar position="static">
             <Toolbar>
-              <Button onClick={e => this.handleMenuItem} >
+              <Button onClick={this.handleMenuItem} >
                 <Typography variant="h6" nowrap="true" style={{ color: "white"}}>
                   Anime Guide
                 </Typography>
