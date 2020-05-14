@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Grid, GridList, GridListTile, GridListTileBar, Typography } from '@material-ui/core';
+import { Grid, GridList, GridListTile, GridListTileBar, Typography, useMediaQuery } from '@material-ui/core';
 import AnimeDialog from '../carousel/AnimeDialog';
 
 
@@ -7,6 +7,8 @@ const UserDashboard = (props) => {
   
   const [malIdFocus, setIdFocus] = useState(null);
   const animes = props.animes;
+  const desktop = useMediaQuery('(min-width:600px)');
+  const cols = desktop ? 5.25 : 1.5;
   
   const handleClose = (event) => {
     console.log("Anime card closed");
@@ -28,7 +30,7 @@ const UserDashboard = (props) => {
       <div key={title}>
         <Typography variant="h5" style={{ color: "white"}}>{title}</Typography>
         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around', overflow: 'hidden' }}>
-          <GridList cols={5.25} cellHeight={230} spacing={10} style={{ flexWrap: 'nowrap' }} >
+          <GridList cols={cols} cellHeight={230} spacing={10} style={{ flexWrap: 'nowrap' }} >
             {content}
           </GridList>
         </div>

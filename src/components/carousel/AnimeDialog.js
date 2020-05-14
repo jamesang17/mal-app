@@ -43,7 +43,7 @@ export default function AnimeDialog(props) {
                     justify="space-evenly"
                 >
                     <Grid item>
-                        <img src={animeData["image_url"]} alt="anime image" />
+                        <img src={animeData["image_url"]} alt="anime" />
                     </Grid>
                     <Grid item style={{padding: "5%", maxWidth: "17em"}}>
                         <Typography variant="h6">{animeData["title"]}</Typography>
@@ -67,7 +67,6 @@ export default function AnimeDialog(props) {
             </Grid>
             <DialogActions>
                 <FavButton 
-                    userAnimeList={props.userAnimeList}
                     malId={animeData["mal_id"]} 
                     title={animeData["title"]}
                     imageUrl={animeData["image_url"]}

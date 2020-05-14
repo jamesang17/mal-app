@@ -1,8 +1,7 @@
 import React from 'react';
 import { AppBar, Toolbar, Typography,
         Button, IconButton, Menu,
-        MenuItem, Snackbar } from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
+        MenuItem } from '@material-ui/core';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import firebase from '../firebase';
 import Login from './auth/Login';
@@ -43,13 +42,11 @@ class Appbar extends React.Component {
     if (event.currentTarget.innerText.toLowerCase() === "anime guide") {
       this.props.setScreen("");
       this.setState({ backdrop: false });
-      console.log("TODO: Make my favorites page.") /* TODO */
     }
 
     if (event.currentTarget.innerText.toLowerCase() === "my account") {
       this.props.setScreen("myaccount");
       this.setState({ backdrop: false });
-      console.log("Define My Accounts function.") /* TODO */
     }
 
     this.setState({ anchorEl: null });
@@ -67,7 +64,6 @@ class Appbar extends React.Component {
 
   displayMenuButtons() {
     const isLoggedIn = this.props.currentUser === undefined || this.props.currentUser === null ? false : true;
-    // console.log(this.props.currentUser);
     if (isLoggedIn) {
       return (
         <div>
