@@ -35,7 +35,7 @@ export default function AnimeCard(props) {
   return (
     <React.Fragment>
       <Card 
-        style={{ padding: "2%", margin: "5%", height: "85%"}} 
+        style={{ display: "flex", flexDirection: "column", padding: "2%", margin: "5%", height: "85%"}} 
         raised={true} 
         key={props.item.mal_id}>
         <CardMedia
@@ -48,7 +48,7 @@ export default function AnimeCard(props) {
           <Typography style={{ fontWeight: "bold" }}>{props.item["title"]}</Typography>
           {getMetadata(props.item)}
         </CardContent>
-        <CardActions>
+        <CardActions style={{ marginTop: "auto", alignSelf: "flex-end" }}>
           <FavButton
             malId={parseInt(props.item.mal_id)} 
             title={props.item.title}
