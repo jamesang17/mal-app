@@ -19,6 +19,7 @@ const UserDashboard = (props) => {
     return (
     <GridListTile key={`${malId}+${index}`}
       onClick={(e) => setIdFocus(malId)}
+      style={{ cursor: "pointer" }}
     >
       <img src={imageUrl} alt={malId} />
       <GridListTileBar title={`${title}`} />
@@ -30,7 +31,7 @@ const UserDashboard = (props) => {
       <div key={title}>
         <Typography variant="h5" style={{ color: "white"}}>{title}</Typography>
         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around', overflow: 'hidden' }}>
-          <GridList cols={cols} cellHeight={230} spacing={10} style={{ flexWrap: 'nowrap' }} >
+          <GridList cols={cols} cellHeight={300} spacing={10} style={{ flexWrap: 'nowrap' }} >
             {content}
           </GridList>
         </div>
