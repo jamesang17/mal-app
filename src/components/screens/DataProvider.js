@@ -63,6 +63,8 @@ export const DataProvider = ({children}) => {
       if (day === moment().dayOfYear()) {
         console.log("using cached data!");
         hydrateFromLocalStorage();
+      } else {
+        fetchAnimes();
       }
     } else {
       console.log("getting new data!");

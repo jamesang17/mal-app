@@ -16,7 +16,7 @@ const ResultDrawer = (props) => {
   const [malIdFocus, setIdFocus] = useState(null);
   const styles = useStyles();
   const desktop = useMediaQuery('(min-width:600px)');
-  const cols = desktop ? 5.25 : 1.5;
+  const cols = desktop ? 4.25 : 1.5;
 
   const handleClose = (event) => {
     console.log("Anime card closed");
@@ -30,7 +30,7 @@ const ResultDrawer = (props) => {
         <GridListTile key={`${res["mal_id"]}+${index}`}
           onClick={(e) => setIdFocus(res.mal_id)}
         >
-          <img src={res["image_url"]} alt={res["mal_id"]} style={{width: "100%"}}/>
+          <img src={res["image_url"]} alt={res["mal_id"]} /> 
           <GridListTileBar title={`${res["title"]}`} />
         </GridListTile>);
     });
