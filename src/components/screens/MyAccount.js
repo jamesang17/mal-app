@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { getSavedAnimes } from '../../api/firestore';
-import { Grid, Typography } from '@material-ui/core';
+import { Grid, Typography, Avatar } from '@material-ui/core';
 import AnimeCard from '../carousel/AnimeCard';
 import CustomBackdrop from '../CustomBackdrop';
+import AvatarImage from '../../assets/default-avatar.png';
 
 const MyAccount = (props) => {
   const user = props.currentUser;
@@ -26,7 +27,7 @@ const MyAccount = (props) => {
     // display 3 cards per row
     animes.forEach((value) => {
       gridContainer.push(
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} sm={4} >
           <AnimeCard item={value} />
         </Grid>
       );
@@ -50,15 +51,16 @@ const MyAccount = (props) => {
     return <CustomBackdrop shouldOpen={true}/>
   }
   return (
-    <Grid container>
-      <Grid item xs={12} sm={3}>
-        <Typography variant="h5" style={{ color: "white" }}>USER INFO</Typography>
+    <Grid container >
+      <Grid item xs={12} sm={3} style={{padding: "1.5%"}} >
+        <Typography variant="h5" style={{ color: "white" }} >Acount Information</Typography>
+        <Avatar src={AvatarImage} style={{height: "10vh", width: "10vh", margin: "5%"}}/>
         {userInfoItem("Email:", user.email)}
         {userInfoItem("Member Since:", user.metadata.creationTime)}
       </Grid>
-      <Grid item xs={12} sm={9}>
+      <Grid item xs={12} sm={9} style={{paddingTop: "1.5%"}}>
         <Typography variant="h5" style={{ color:"white" }}>Saved Animes</Typography>
-        <Grid container>
+        <Grid container justify="center" space={0}>
           {userAnimes.length === 0 ? noAnimesNotice() : createGrid(userAnimes)}
         </Grid>
       </Grid>
