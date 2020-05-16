@@ -23,7 +23,7 @@ export const DataProvider = ({children}) => {
     const fetchAnimes = async () => {
       const tempAnimeResMap = new Map();
       await topAnime().then(res => {
-        tempAnimeResMap.set("TOP AIRING", res);
+        tempAnimeResMap.set("TOP AIRING", res.slice(0, 15));
       });
       await getAnimeInGenre(GenreIds.ACTION).then(res => {
         tempAnimeResMap.set("ACTION", res.slice(0, 15));

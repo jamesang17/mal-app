@@ -4,10 +4,12 @@ import { Grid, Typography, Avatar } from '@material-ui/core';
 import AnimeCard from '../carousel/AnimeCard';
 import CustomBackdrop from '../CustomBackdrop';
 import AvatarImage from '../../assets/default-avatar.png';
+import AnimeDialog from '../carousel/AnimeDialog';
 
 const MyAccount = (props) => {
   const user = props.currentUser;
   const [userAnimes, setUserAnimes] = useState(null);
+  const [malIdFocus, setIdFocus] = useState(null);
 
   useEffect(() => {
     const fetchUserAnimes = async (user) => {
@@ -28,7 +30,7 @@ const MyAccount = (props) => {
     animes.forEach((value) => {
       gridContainer.push(
         <Grid item xs={12} sm={4} >
-          <AnimeCard item={value} />
+          <AnimeCard item={value} getMalId={e => setIdFocus(value.mal_id)}/>
         </Grid>
       );
     });
@@ -52,6 +54,12 @@ const MyAccount = (props) => {
   }
   return (
     <Grid container >
+      <AnimeDialog
+        closeFunction={e => setIdFocus(null) }
+        openState={Boolean(malIdFocus)}
+        malId={malIdFocus}
+        userAnimeList={userAnimes}
+      />
       <Grid item xs={12} sm={3} style={{padding: "1.5%"}} >
         <Typography variant="h5" style={{ color: "white" }} >Acount Information</Typography>
         <Avatar src={AvatarImage} style={{height: "10vh", width: "10vh", margin: "5%"}}/>
