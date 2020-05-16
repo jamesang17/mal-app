@@ -1,7 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { AuthContext } from '../auth/Auth';
-import { topAnime, getAnimeInGenre, GenreIds } from '../../api/Jikan';
+import { topAnime, getAnimeInGenre, GenreIds, getAnimeRecommendations } from '../../api/Jikan';
 import { getSavedAnimeIds, getSavedAnimes } from '../../api/firestore';
+import firebase from '../../firebase';
+import CustomBackdrop from '../CustomBackdrop';
+import Snackbar from '@material-ui/core/Snackbar';
 
 const moment = require('moment-timezone');
 
@@ -12,6 +15,9 @@ export const DataProvider = ({children}) => {
   const [animeResMap, setAnimeResMap] = useState(new Map());
   const [userAnimeIdsSet, setUserAnimeIdsSet] = useState(new Set());
   const [userAnimes, setUserAnimes] = useState([]);
+  const [backdrop, setBackdrop] = useState(false);
+  const [openSnack, setOpenSnack] = useState(false);
+  const [snackMessage, setSnackMessage] = useState("");
 
   useEffect(() => {
     const fetchAnimes = async () => {
@@ -47,7 +53,6 @@ export const DataProvider = ({children}) => {
       }
     }
 
-
     const hydrateFromLocalStorage = () => {
       let animes = localStorage.getItem("animes");
       try {
@@ -73,15 +78,65 @@ export const DataProvider = ({children}) => {
     fetchUserAnimes(currentUser);
   }, [currentUser]);
 
+  /**
+   * Favorite button on click event handlers
+   * 
+   */
+  const removeFavorite = async (animeObj) => {
+    setBackdrop(true);
+    const animeOnDelete = firebase.functions().httpsCallable('dbUsersAnimesOnDelete');
+    return await animeOnDelete({ anime: animeObj })
+      .then(() => { 
+        userAnimeIdsSet.delete(animeObj.mal_id)
+        setUserAnimeIdsSet(userAnimeIdsSet);
+        setBackdrop(false);
+        setSnackMessage("Removed anime!");
+        setOpenSnack(true);
+        return "success"; })
+      .catch(error => { 
+        setBackdrop(false);
+        alert(error.message);
+        return error.message });
+  }
+
+  const addFavorite = async (animeObj) => {
+    setBackdrop(true);
+    const animeOnCreate = firebase.functions().httpsCallable('dbUsersAnimesOnCreate');
+    let recs = await getAnimeRecommendations(animeObj.mal_id).then(res => {
+      return res.splice(0, 5); // get top 5 recs
+    }).catch(error => console.log(error));
+    animeObj.setRecommendations(recs);
+    return await animeOnCreate({ anime: animeObj })
+      .then(() => { 
+        userAnimeIdsSet.add(animeObj.mal_id)
+        setUserAnimeIdsSet(userAnimeIdsSet);
+        setBackdrop(false);
+        setSnackMessage("Saved Anime!");
+        setOpenSnack(true);
+        return "success"; })
+      .catch(error => { 
+        setBackdrop(false);
+        setSnackMessage(error.message);
+        setOpenSnack(true); 
+        return error.message });
+  }
+
   return (
     <DataContext.Provider
       value={{
         animeResMap,
         userAnimeIdsSet,
-        userAnimes
+        userAnimes,
+        removeFavorite,
+        addFavorite,
+        setSnackMessage,
+        setOpenSnack
       }}
     >
       {children}
+      <CustomBackdrop shouldOpen={backdrop} />
+      <Snackbar anchorOrigin={{vertical: "top", horizontal: "right"}} open={openSnack} autoHideDuration={3000} style={{ zIndex: 999 }}
+        onClose={e => setOpenSnack(false)} message={snackMessage} />
     </DataContext.Provider>
   )
 }
