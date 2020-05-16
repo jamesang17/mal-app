@@ -17,8 +17,6 @@ export default function AnimeDialog(props) {
         if (props.openState === true) {
             getAnimeInfo(props.malId).then( res => {
                 setAnimeData(res);
-                console.log(res);
-
                 // Create array of genre
                 let tempArray = [];
                 res["genres"].forEach( item => {

@@ -8,16 +8,6 @@ import AnimeDialog from './AnimeDialog';
 const CardCarousel = (props) => {
 
     const [malIdFocus, setIdFocus] = useState(null);
-    
-    const handleClose = (event) => {
-        console.log("Anime card closed");
-        setIdFocus(null)
-    }
-
-    const focusMalId = (malId) => {
-        console.log("Anime card opened");
-        setIdFocus(malId);
-    }
 
     // Screen dimensions adjustments
     const responsive = {
@@ -50,7 +40,7 @@ const CardCarousel = (props) => {
     return (
         <React.Fragment>
             <AnimeDialog
-                closeFunction={handleClose}
+                closeFunction={e => setIdFocus(null) }
                 openState={Boolean(malIdFocus)}
                 malId={malIdFocus}
                 userAnimeList={props.userAnimeList}
@@ -63,7 +53,7 @@ const CardCarousel = (props) => {
                     <AnimeCard 
                         item={item}
                         key={item.mal_id}
-                        getMalId={focusMalId}
+                        getMalId={e => setIdFocus(item.mal_id) }
                     />
                 ))}
             </Carousel>
