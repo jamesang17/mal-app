@@ -4,6 +4,7 @@ import UserDashboard from './UserDashboard';
 import Typography from '@material-ui/core/Typography';
 import CustomBackdrop from '../CustomBackdrop';
 import { DataContext } from './DataProvider';
+import GenreSearch from '../search/GenreSearch';
 
 
 const Dashboard = () => {
@@ -39,6 +40,7 @@ const Dashboard = () => {
             <div style={{ padding: "2%" }} >
                 <Carousels animeResMap={animeResMap} />
             </div>
+            <GenreSearch />
         </React.Fragment>
     )
 }
