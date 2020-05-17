@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { AuthContext } from '../auth/Auth';
-import { topAnime, getAnimeInGenre, GenreIds, getAnimeRecommendations } from '../../api/Jikan';
+import { topAnime, getAnimeInGenre, GenreIds, getAnimeRecommendations, AnimeTopTypes } from '../../api/Jikan';
 import { getSavedAnimeIds, getSavedAnimes } from '../../api/firestore';
 import firebase from '../../firebase';
 import CustomBackdrop from '../CustomBackdrop';
@@ -24,6 +24,9 @@ export const DataProvider = ({children}) => {
       const tempAnimeResMap = new Map();
       await topAnime().then(res => {
         tempAnimeResMap.set("TOP AIRING", res.slice(0, 15));
+      });
+      await topAnime(AnimeTopTypes.UPCOMING).then(res => {
+        tempAnimeResMap.set("UPCOMING", res.slice(0, 15));
       });
       await getAnimeInGenre(GenreIds.ACTION).then(res => {
         tempAnimeResMap.set("ACTION", res.slice(0, 15));
